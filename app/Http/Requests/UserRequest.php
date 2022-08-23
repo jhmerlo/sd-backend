@@ -28,7 +28,9 @@ class UserRequest extends FormRequest
         return [
             'email' => 'endereço de e-mail',
             'password' => 'senha',
-            'name' => 'nome'
+            'name' => 'nome',
+            'institutionalId' => 'matrícula',
+            'telephone' => 'telefone'
         ];
     }
 
@@ -43,6 +45,8 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'institutionalId' => 'required|string|min:10',
+            'telephone' => 'required|string|min:9'
         ];
     }
 
