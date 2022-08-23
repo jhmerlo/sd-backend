@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 // Factories Imports
 use App\Models\User;
@@ -18,16 +19,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(9)->create();
-        
-        User::factory()->create([
-            'name' => 'José Henrique',
-            'email' => 'jose.h.sousa@edu.ufes.br',
-            'password' => bcrypt('teste123')
+        $this->call([
+            UserSeeder::class
         ]);
 
-        // $this->call([
-        //     DistributionCenterSeeder::class
-        // ]);
+        //main admin account
+        DB::table('users')->insert([
+            'name' => 'Administrador',
+            'email' => 'admin@sd.com',
+            'institutionalId' => '384923109',
+            'telephone' => '(27) 99340-0493',
+            'email_verified_at' => now(),
+            'license' => 'active',
+            'role' => 'admin',
+            'password' => Hash::make('password'),
+        ]);
+
+        //main maintenance account
+        DB::table('users')->insert([
+            'name' => 'Responsável',
+            'email' => 'manutencao@sd.com',
+            'institutionalId' => '327326409',
+            'telephone' => '(27) 98370-0201',
+            'email_verified_at' => now(),
+            'license' => 'active',
+            'role' => 'maintenance',
+            'password' => Hash::make('password'),
+        ]);
     }
 }

@@ -17,8 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('institutionalId')->unique();
+            $table->string('telephone');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['maintenance', 'admin']);
+            $table->enum('license', ['active', 'inactive']);
             $table->rememberToken();
             $table->timestamps();
         });
