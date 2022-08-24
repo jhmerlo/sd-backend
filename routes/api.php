@@ -20,6 +20,6 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('resend-email-verification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum', 'verified')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum', 'verified', 'active')->get('/user', function (Request $request) {
     return $request->user();
 });
