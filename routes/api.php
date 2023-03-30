@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\ComputerController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,9 +19,11 @@ use App\Http\Controllers\EmailVerificationController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('resend-email-verification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
-Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
+Route::post('resend-email-verification', [EmailVerificationController::class, 'resendVerificationEmail']);
+Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 
-Route::middleware('auth:sanctum', 'verified', 'active')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
+    Route::controller(ComputerController::class)->group(function () {
+        Route::get('computers', 'index');
+    });
 });

@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => "Usuário criado com sucesso! Um e-mail foi encaminhado para o seu endereço para que você possa confirmá-lo."
-        ]);
+        ], 200);
     }
 
     public function login(Request $request) {
@@ -44,9 +44,22 @@ class AuthController extends Controller
 
         $user = User::where('email', $request['email'])->firstOrFail();
 
+        if ($user['email_verified_at'] == null) {
+            return response()->json([
+                'message' => 'E-mail não verificado.'
+            ], 401);
+        }
+
+        if ($user['license'] != 'active') {
+            return response()->json([
+                'message' => 'Você não possui uma licença ativa. Contate um administrador para conceder acesso ao sistema.'
+            ], 401);
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
+            'user' => $user,
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
