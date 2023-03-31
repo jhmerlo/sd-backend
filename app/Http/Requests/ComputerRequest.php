@@ -55,8 +55,8 @@ class ComputerRequest extends FormRequest
             'manufacturer' => 'required|string|max:255',
             'sanitized' => 'boolean',
             'functional' => 'boolean',
-            'currentStep' => 'integer|min:1|max:6',
-            'currentStepResponsibleId' => 'required|integer|exists:users,institutionalId|min:10',
+            'currentStep' => 'integer|between:1,6',
+            'currentStepResponsibleId' => 'required|integer|exists:users,institutionalId|size:10',
             'operationalSystem' => 'string|max:255',
             'hdmiInput' => 'boolean',
             'vgaInput' => 'boolean',
@@ -82,6 +82,8 @@ class ComputerRequest extends FormRequest
             'exists' => 'O campo :attribute deve ser um id existente.',
             'max' => 'O campo :attribute deve possuir no máximo :max caracteres.',
             'min' => 'O campo :attribute deve possuir no mínimo :min caracteres.',
+            'size' => 'O campo :attribute deve possuir exatamente :size caracteres.',
+            'between' => 'O campo :attribute deve estar entre :min e :max.',
             'string' => 'O campo :attribute deve ser do tipo string.'
         ];
     }

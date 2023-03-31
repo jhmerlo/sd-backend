@@ -45,7 +45,7 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'institutionalId' => 'required|string|min:10|unique:users',
+            'institutionalId' => 'required|string|size:10|unique:users',
             'telephone' => 'required|string|min:9'
         ];
     }
@@ -63,7 +63,8 @@ class UserRequest extends FormRequest
             'max' => 'O campo :attribute deve possuir no máximo :max caracteres.',
             'unique' => 'O campo :attribute já está sendo utilizado.',
             'email' => 'O campo :attribute não é válido.',
-            'min' => 'O campo :attribute deve possuir no mínimo :min caracteres.'
+            'min' => 'O campo :attribute deve possuir no mínimo :min caracteres.',
+            'size' => 'O campo :attribute deve possuir exatamente :size caracteres.'
         ];
     }
 
