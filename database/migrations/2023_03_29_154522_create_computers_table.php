@@ -30,7 +30,7 @@ return new class extends Migration
             $table->boolean('wirelessNetworkAdapter')->nullable();
             $table->boolean('audioInputAndOutput')->nullable();
             $table->boolean('cdRom')->nullable();
-            $table->foreignId('currentStepResponsibleId')->references('id')->on('users');
+            $table->foreignId('currentStepResponsibleId')->references('institutionalId')->on('users');
         });
     }
 

@@ -12,6 +12,8 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'institutionalId';
+
     protected $attributes = [
         'license' => 'inactive',
         'role' => 'maintenance'

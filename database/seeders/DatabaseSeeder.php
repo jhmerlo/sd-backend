@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Administrador',
             'email' => 'admin@sd.com',
-            'institutionalId' => '384923109',
+            'institutionalId' => '3849231091',
             'telephone' => '(27) 99340-0493',
             'email_verified_at' => now(),
             'license' => 'active',
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Responsável',
             'email' => 'manutencao@sd.com',
-            'institutionalId' => '327326409',
+            'institutionalId' => '3849231021',
             'telephone' => '(27) 98370-0201',
             'email_verified_at' => now(),
             'license' => 'active',

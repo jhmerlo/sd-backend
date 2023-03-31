@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreComputerRequest;
-use App\Http\Requests\UpdateComputerRequest;
+use App\Http\Requests\ComputerRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Computer;
 use App\Models\User;
@@ -19,21 +19,17 @@ class ComputerController extends Controller
     {
         $recordsPerPage = 10;
 
-        if ($request->filled('type')) {
-            return Computer::with('responsible')->where('type', $request['type'])->simplePaginate($recordsPerPage);
+        $query = Computer::query();
+
+        $filters = ['type', 'currentStep'];
+
+        foreach ($filters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, $request[$filter]);
+            }
         }
 
-        return Computer::with('responsible')->simplePaginate($recordsPerPage);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $query->with('responsible')->simplePaginate($recordsPerPage);
     }
 
     /**
@@ -42,9 +38,22 @@ class ComputerController extends Controller
      * @param  \App\Http\Requests\StoreComputerRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreComputerRequest $request)
+    public function store(ComputerRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $user = Computer::create([
+            'type' => $validatedData['type'],
+            'manufacturer' => $validatedData['manufacturer'],
+            'sanitized' => $validatedData['sanitized'],
+            'functional' => $validatedData['functional'],
+            'currentStep' => $validatedData['currentStep'],
+            'currentStepResponsibleId' => $validatedData['currentStepResponsibleId']
+        ]);
+
+        return response()->json([
+            'message' => "Computador criado com sucesso!"
+        ], 200);
     }
 
     /**

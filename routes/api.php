@@ -25,5 +25,6 @@ Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'ver
 Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
     Route::controller(ComputerController::class)->group(function () {
         Route::get('computers', 'index');
+        Route::post('computer', 'store');
     });
 });

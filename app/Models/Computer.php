@@ -33,7 +33,7 @@ class Computer extends Model
 
     public function responsible()
     {
-        return $this->belongsTo(User::class, 'currentStepResponsibleId', 'id');
+        return $this->belongsTo(User::class, 'currentStepResponsibleId', 'institutionalId');
     }
 
 }
