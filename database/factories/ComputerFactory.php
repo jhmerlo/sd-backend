@@ -27,4 +27,13 @@ class ComputerFactory extends Factory
             'current_step_responsible_id' => User::factory()
         ];
     }
+
+    public function step3()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'current_step' => 3,
+            ];
+        });
+    }
 }

@@ -17,8 +17,13 @@ class ComputerSeeder extends Seeder
     public function run()
     {
         Computer::factory()
-            ->has(Motherboard::factory()->count(1))
             ->count(10)
+            ->create();
+
+        Computer::factory()
+            ->has(Motherboard::factory()->count(1))
+            ->step3()
+            ->count(2)
             ->create();
     }
 }
