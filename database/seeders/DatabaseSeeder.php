@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 // Factories Imports
 use App\Models\User;
+use App\Models\Computer;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,10 +20,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            UserSeeder::class
-        ]);
-
         //main admin account
         DB::table('users')->insert([
             'name' => 'Administrador',
@@ -45,6 +42,11 @@ class DatabaseSeeder extends Seeder
             'license' => 'active',
             'role' => 'maintenance',
             'password' => Hash::make('password'),
+        ]);
+
+        $this->call([
+            UserSeeder::class,
+            ComputerSeeder::class
         ]);
     }
 }

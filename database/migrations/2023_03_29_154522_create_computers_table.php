@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->enum('type', ['desktop', 'notebook']);
+            $table->string('description');
             $table->string('patrimony')->nullable();
             $table->string('manufacturer');
             $table->boolean('sanitized');
