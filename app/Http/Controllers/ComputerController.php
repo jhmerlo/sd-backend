@@ -44,6 +44,8 @@ class ComputerController extends Controller
 
         $user = Computer::create([
             'type' => $validatedData['type'],
+            'patrimony' => $validatedData['patrimony'] ?? null,
+            'description' => $validatedData['description'],
             'manufacturer' => $validatedData['manufacturer'],
             'sanitized' => $validatedData['sanitized'],
             'functional' => $validatedData['functional'],
@@ -62,20 +64,13 @@ class ComputerController extends Controller
      * @param  \App\Models\Computer  $computer
      * @return \Illuminate\Http\Response
      */
-    public function show(Computer $computer)
+    public function show(Request $request)
     {
-        //
-    }
+        $computer = Computer::with('responsible')->findOrFail($request->id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Computer  $computer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Computer $computer)
-    {
-        //
+        return response()->json([
+            'computer' => $computer
+        ], 200);
     }
 
     /**
@@ -96,8 +91,14 @@ class ComputerController extends Controller
      * @param  \App\Models\Computer  $computer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Computer $computer)
+    public function destroy(Request $request)
     {
-        //
+        $computer = Computer::findOrFail($request->id);
+
+        $computer->delete();
+
+        return response()->json([
+            'message' => "Computador deletado com sucesso!"
+        ], 200);
     }
 }

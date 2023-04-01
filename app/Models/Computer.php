@@ -16,6 +16,8 @@ class Computer extends Model
      */
     protected $fillable = [
         'type',
+        'description',
+        'patrimony',
         'manufacturer',
         'sanitized',
         'functional',

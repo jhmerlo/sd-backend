@@ -39,7 +39,9 @@ class ComputerRequest extends FormRequest
             'localNetworkAdapter' => 'adaptador de rede local',
             'wirelessNetworkAdapter' => 'adaptador de rede sem fio',
             'audioInputAndOutput' => 'entrada e saída de áudio',
-            'cdRom' => 'CD-ROM'
+            'cdRom' => 'CD-ROM',
+            'description' => 'descrição',
+            'patrimony' => 'patrimônio'
         ];
     }
 
@@ -56,7 +58,7 @@ class ComputerRequest extends FormRequest
             'sanitized' => 'boolean',
             'functional' => 'boolean',
             'currentStep' => 'integer|between:1,6',
-            'currentStepResponsibleId' => 'required|integer|exists:users,institutionalId|size:10',
+            'currentStepResponsibleId' => 'required|integer|exists:users,institutionalId|min:10',
             'operationalSystem' => 'string|max:255',
             'hdmiInput' => 'boolean',
             'vgaInput' => 'boolean',
@@ -64,7 +66,9 @@ class ComputerRequest extends FormRequest
             'localNetworkAdapter' => 'boolean',
             'wirelessNetworkAdapter' => 'boolean',
             'audioInputAndOutput' => 'boolean',
-            'cdRom' => 'boolean'
+            'cdRom' => 'boolean',
+            'description' => 'string|required|max:255',
+            'patrimony' => 'string|max:255'
         ];
     }
 
