@@ -23,8 +23,8 @@ class ComputerFactory extends Factory
             'manufacturer' => $this->faker->company(),
             'sanitized' => $this->faker->boolean(),
             'functional' => $this->faker->boolean(),
-            'currentStep' => 2,
-            'currentStepResponsibleId' => User::factory()
+            'current_step' => 2,
+            'current_step_responsible_id' => User::factory()
         ];
     }
 }

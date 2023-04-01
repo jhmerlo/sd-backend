@@ -21,21 +21,25 @@ class Computer extends Model
         'manufacturer',
         'sanitized',
         'functional',
-        'currentStep',
-        'currentStepResponsibleId',
-        'operationalSystem',
-        'hdmiInput',
-        'vgaInput',
-        'dviInput',
-        'localNetworkAdapter',
-        'wirelessNetworkAdapter',
-        'audioInputAndOutput',
-        'cdRom'
+        'current_step',
+        'current_step_responsible_id',
+        'operational_system',
+        'hdmi_input',
+        'vga_input',
+        'dvi_input',
+        'local_network_adapter',
+        'wireless_network_adapter',
+        'audio_input_and_output',
+        'cd_rom'
     ];
 
-    public function responsible()
+    public function responsible ()
     {
-        return $this->belongsTo(User::class, 'currentStepResponsibleId', 'institutionalId');
+        return $this->belongsTo(User::class, 'current_step_responsible_id', 'institutional_id');
     }
 
+    public function motherboard ()
+    {
+        return $this->hasOne(Motherboard::class);
+    }
 }

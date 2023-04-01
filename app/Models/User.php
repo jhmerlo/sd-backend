@@ -12,7 +12,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'institutionalId';
+    protected $primaryKey = 'institutional_id';
 
     protected $attributes = [
         'license' => 'inactive',
@@ -28,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'institutionalId',
+        'institutional_id',
         'telephone'
     ];
 

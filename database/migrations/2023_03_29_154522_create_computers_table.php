@@ -22,16 +22,16 @@ return new class extends Migration
             $table->string('manufacturer');
             $table->boolean('sanitized');
             $table->boolean('functional');
-            $table->integer('currentStep');
-            $table->string('operationalSystem')->nullable();
-            $table->boolean('hdmiInput')->nullable();
-            $table->boolean('vgaInput')->nullable();
-            $table->boolean('dviInput')->nullable();
-            $table->boolean('localNetworkAdapter')->nullable();
-            $table->boolean('wirelessNetworkAdapter')->nullable();
-            $table->boolean('audioInputAndOutput')->nullable();
-            $table->boolean('cdRom')->nullable();
-            $table->foreignId('currentStepResponsibleId')->references('institutionalId')->on('users');
+            $table->integer('current_step');
+            $table->string('operational_system')->nullable();
+            $table->boolean('hdmi_input')->nullable();
+            $table->boolean('vga_input')->nullable();
+            $table->boolean('dvi_input')->nullable();
+            $table->boolean('local_network_adapter')->nullable();
+            $table->boolean('wireless_network_adapter')->nullable();
+            $table->boolean('audio_input_and_output')->nullable();
+            $table->boolean('cd_rom')->nullable();
+            $table->foreignId('current_step_responsible_id')->references('institutional_id')->on('users');
         });
     }
 

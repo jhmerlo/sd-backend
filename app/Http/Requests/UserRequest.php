@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             'email' => 'endereço de e-mail',
             'password' => 'senha',
             'name' => 'nome',
-            'institutionalId' => 'matrícula',
+            'institutional_id' => 'matrícula',
             'telephone' => 'telefone'
         ];
     }
@@ -45,7 +45,7 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'institutionalId' => 'required|string|size:10|unique:users',
+            'institutional_id' => 'required|string|size:10|unique:users',
             'telephone' => 'required|string|min:9'
         ];
     }

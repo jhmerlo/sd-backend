@@ -4,10 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Computer;
 use App\Models\Motherboard;
 
-class ComputerSeeder extends Seeder
+class MotherboardSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,8 +15,7 @@ class ComputerSeeder extends Seeder
      */
     public function run()
     {
-        Computer::factory()
-            ->has(Motherboard::factory()->count(1))
+        Motherboard::factory()
             ->count(10)
             ->create();
     }

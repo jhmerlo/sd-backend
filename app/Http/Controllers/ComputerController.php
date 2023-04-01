@@ -49,8 +49,8 @@ class ComputerController extends Controller
             'manufacturer' => $validatedData['manufacturer'],
             'sanitized' => $validatedData['sanitized'],
             'functional' => $validatedData['functional'],
-            'currentStep' => $validatedData['currentStep'],
-            'currentStepResponsibleId' => $validatedData['currentStepResponsibleId']
+            'current_step' => $validatedData['current_step'],
+            'current_step_responsible_id' => $validatedData['current_step_responsible_id']
         ]);
 
         return response()->json([
