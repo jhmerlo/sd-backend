@@ -29,7 +29,7 @@ class ComputerController extends Controller
             }
         }
 
-        return $query->with('responsible')->simplePaginate($recordsPerPage);
+        return $query->with(['responsible', 'motherboard'])->simplePaginate($recordsPerPage);
     }
 
     /**
@@ -42,7 +42,7 @@ class ComputerController extends Controller
     {
         $validatedData = $request->validated();
 
-        $user = Computer::create([
+        $computer = Computer::create([
             'type' => $validatedData['type'],
             'patrimony' => $validatedData['patrimony'] ?? null,
             'description' => $validatedData['description'],

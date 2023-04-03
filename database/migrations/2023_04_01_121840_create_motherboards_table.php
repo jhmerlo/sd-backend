@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('manufacturer');
             $table->string('model');
             $table->boolean('functional');
-            $table->unsignedInteger('computer_id')->nullable();
+            $table->unsignedInteger('computer_id')->nullable()->unique();
             $table->foreign('computer_id')->references('id')->on('computers')->onDelete('set null');
         });
     }

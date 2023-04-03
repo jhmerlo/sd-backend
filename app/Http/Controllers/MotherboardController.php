@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMotherboardRequest;
-use App\Http\Requests\UpdateMotherboardRequest;
+use App\Http\Requests\MotherboardRequest;
+use Illuminate\Http\Request;
 use App\Models\Motherboard;
+use App\Models\Computer;
 
 class MotherboardController extends Controller
 {
@@ -13,19 +14,21 @@ class MotherboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $recordsPerPage = 10;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $query = Motherboard::query();
+
+        $filters = ['computer_id', 'model', 'manufacturer', 'functional'];
+
+        foreach ($filters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, $request[$filter]);
+            }
+        }
+
+        return $query->simplePaginate($recordsPerPage);
     }
 
     /**
@@ -34,9 +37,20 @@ class MotherboardController extends Controller
      * @param  \App\Http\Requests\StoreMotherboardRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreMotherboardRequest $request)
+    public function store(MotherboardRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $motherboard = Motherboard::create([
+            'manufacturer' => $validatedData['manufacturer'],
+            'functional' => $validatedData['functional'],
+            'model' => $validatedData['model'],
+            'computer_id' => $validatedData['computer_id']
+        ]);
+
+        return response()->json([
+            'message' => "Placa mãe criada com sucesso!"
+        ], 200);
     }
 
     /**
@@ -45,20 +59,13 @@ class MotherboardController extends Controller
      * @param  \App\Models\Motherboard  $motherboard
      * @return \Illuminate\Http\Response
      */
-    public function show(Motherboard $motherboard)
+    public function show(Request $request)
     {
-        //
-    }
+        $motherboard = Motherboard::findOrFail($request->id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Motherboard  $motherboard
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Motherboard $motherboard)
-    {
-        //
+        return response()->json([
+            'motherboard' => $motherboard
+        ], 200);
     }
 
     /**
@@ -68,9 +75,37 @@ class MotherboardController extends Controller
      * @param  \App\Models\Motherboard  $motherboard
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMotherboardRequest $request, Motherboard $motherboard)
+    public function update(MotherboardRequest $request)
     {
-        //
+        $motherboard = Motherboard::findOrFail($request->id);
+        $validatedData = $request->validated();
+
+        $motherboard->fill($validatedData);
+
+
+        $changedComputerId = $motherboard->isDirty('computer_id') && $motherboard->getOriginal('computer_id') != null;
+        $changedFunctionalFieldToFalse = $motherboard->isDirty('functional') && $motherboard['functional'] == false;
+
+        // situação 1: id do computador mudou = computador de origem deve voltar etapa 2
+        // situação 2: id do computador não mudou mas functional = false => id do computador de origem deve ir para a etapa 2
+        // situação 3: muda o id do computador e o functional = false => computador de origem deve ir para a etapa 2 e o computador destino nada acontece
+
+        if (count($motherboard->getDirty()) > 0) {
+            if ($changedComputerId || $changedFunctionalFieldToFalse) {
+                $computer = Computer::findOrFail($motherboard->getOriginal('computer_id'));
+                
+                if ($computer['current_step'] > 2) {
+                    $computer['current_step'] = 2;
+                    $computer->save();
+                }
+            }
+            $motherboard->save();
+        }
+        
+        return response()->json([
+            'message' => 'Placa mãe editada com sucesso!',
+            'motherboard' => $motherboard
+        ], 200);
     }
 
     /**
@@ -79,8 +114,14 @@ class MotherboardController extends Controller
      * @param  \App\Models\Motherboard  $motherboard
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Motherboard $motherboard)
+    public function destroy(Request $request)
     {
-        //
+        $motherboard = Motherboard::findOrFail($request->id);
+
+        $motherboard->delete();
+
+        return response()->json([
+            'message' => "Placa mãe deletada com sucesso!"
+        ], 200);
     }
 }
