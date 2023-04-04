@@ -9,6 +9,7 @@ use App\Http\Controllers\MotherboardController;
 use App\Http\Controllers\ProcessorController;
 use App\Http\Controllers\PowerSupplyController;
 use App\Http\Controllers\StorageDeviceController;
+use App\Http\Controllers\RamMemoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,5 +66,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('storage-device', 'store');
         Route::put('storage-device/{id}', 'update');
         Route::delete('storage-device/{id}', 'destroy');
+    });
+
+    Route::controller(RamMemoryController::class)->group(function () {
+        Route::get('ram-memories', 'index');
+        Route::get('ram-memory/{id}', 'show');
+        Route::post('ram-memory', 'store');
+        Route::put('ram-memory/{id}', 'update');
+        Route::delete('ram-memory/{id}', 'destroy');
     });
 });

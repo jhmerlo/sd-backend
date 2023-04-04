@@ -57,4 +57,9 @@ class Computer extends Model
     {
         return $this->hasMany(StorageDevice::class);
     }
+
+    public function ramMemories ()
+    {
+        return $this->hasMany(RamMemory::class);
+    }
 }

@@ -14,6 +14,8 @@ use App\Models\Motherboard;
 use App\Models\Processor;
 use App\Models\PowerSupply;
 use App\Models\StorageDevice;
+use App\Models\RamMemory;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -54,7 +56,8 @@ class DatabaseSeeder extends Seeder
             MotherboardSeeder::class,
             ProcessorSeeder::class,
             PowerSupplySeeder::class,
-            StorageDeviceSeeder::class
+            StorageDeviceSeeder::class,
+            RamMemorySeeder::class
         ]);
     }
 }
