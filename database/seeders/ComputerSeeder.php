@@ -8,6 +8,7 @@ use App\Models\Computer;
 use App\Models\Motherboard;
 use App\Models\Processor;
 use App\Models\PowerSupply;
+use App\Models\StorageDevice;
 
 class ComputerSeeder extends Seeder
 {
@@ -26,6 +27,7 @@ class ComputerSeeder extends Seeder
             ->has(Motherboard::factory()->count(1)->functional())
             ->has(Processor::factory()->count(1)->functional())
             ->has(PowerSupply::factory()->count(1)->functional())
+            ->has(StorageDevice::factory()->count(2)->functional(1))
             ->step3()
             ->count(2)
             ->create();

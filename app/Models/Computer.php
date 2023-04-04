@@ -52,4 +52,9 @@ class Computer extends Model
     {
         return $this->hasOne(Processor::class);
     }
+
+    public function storageDevices ()
+    {
+        return $this->hasMany(StorageDevice::class);
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\MotherboardController;
 use App\Http\Controllers\ProcessorController;
 use App\Http\Controllers\PowerSupplyController;
+use App\Http\Controllers\StorageDeviceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,5 +57,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('power-supply', 'store');
         Route::put('power-supply/{id}', 'update');
         Route::delete('power-supply/{id}', 'destroy');
+    });
+
+    Route::controller(StorageDeviceController::class)->group(function () {
+        Route::get('storage-devices', 'index');
+        Route::get('storage-device/{id}', 'show');
+        Route::post('storage-device', 'store');
+        Route::put('storage-device/{id}', 'update');
+        Route::delete('storage-device/{id}', 'destroy');
     });
 });
