@@ -47,4 +47,9 @@ class Computer extends Model
     {
         return $this->hasOne(Processor::class);
     }
+
+    public function powerSupply ()
+    {
+        return $this->hasOne(Processor::class);
+    }
 }

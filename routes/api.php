@@ -7,6 +7,7 @@ use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\MotherboardController;
 use App\Http\Controllers\ProcessorController;
+use App\Http\Controllers\PowerSupplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,5 +48,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('processor', 'store');
         Route::put('processor/{id}', 'update');
         Route::delete('processor/{id}', 'destroy');
+    });
+
+    Route::controller(PowerSupplyController::class)->group(function () {
+        Route::get('power-supplies', 'index');
+        Route::get('power-supply/{id}', 'show');
+        Route::post('power-supply', 'store');
+        Route::put('power-supply/{id}', 'update');
+        Route::delete('power-supply/{id}', 'destroy');
     });
 });

@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Computer;
 use App\Models\Motherboard;
 use App\Models\Processor;
+use App\Models\PowerSupply;
 
 class DatabaseSeeder extends Seeder
 {
@@ -50,7 +51,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ComputerSeeder::class,
             MotherboardSeeder::class,
-            ProcessorSeeder::class
+            ProcessorSeeder::class,
+            PowerSupplySeeder::class
         ]);
     }
 }

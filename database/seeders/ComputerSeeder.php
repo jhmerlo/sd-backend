@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Computer;
 use App\Models\Motherboard;
 use App\Models\Processor;
+use App\Models\PowerSupply;
 
 class ComputerSeeder extends Seeder
 {
@@ -24,6 +25,7 @@ class ComputerSeeder extends Seeder
         Computer::factory()
             ->has(Motherboard::factory()->count(1)->functional())
             ->has(Processor::factory()->count(1)->functional())
+            ->has(PowerSupply::factory()->count(1)->functional())
             ->step3()
             ->count(2)
             ->create();
