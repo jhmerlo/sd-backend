@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Computer;
 use App\Models\Motherboard;
+use App\Models\Processor;
 
 class ComputerSeeder extends Seeder
 {
@@ -21,7 +22,8 @@ class ComputerSeeder extends Seeder
             ->create();
 
         Computer::factory()
-            ->has(Motherboard::factory()->count(1))
+            ->has(Motherboard::factory()->count(1)->functional())
+            ->has(Processor::factory()->count(1)->functional())
             ->step3()
             ->count(2)
             ->create();

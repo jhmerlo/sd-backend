@@ -7,7 +7,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
 
-class MotherboardRequest extends FormRequest
+class ProcessorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,10 @@ class MotherboardRequest extends FormRequest
             'manufacturer' => 'fabricante',
             'functional' => 'funcional',
             'model' => 'modelo',
-            'computer_id' => 'computador'
+            'computer_id' => 'computador',
+            'clock' => 'clock (GHz)',
+            'threads' => 'threads',
+            'cache' => 'cache (MB)'
         ];
     }
 
@@ -45,10 +48,13 @@ class MotherboardRequest extends FormRequest
             'manufacturer' => 'required|string|max:255',
             'functional' => 'required|boolean',
             'model' => 'required|string|max:255',
+            'clock' => 'numeric',
+            'threads' => 'integer',
+            'cache' => 'integer',
             'computer_id' => [
                 'integer',
                 'exists:computers,id',
-                Rule::unique('motherboards','computer_id')->ignore($this->id)
+                Rule::unique('processors','computer_id')->ignore($this->id)
             ]
         ];
     }
@@ -63,11 +69,12 @@ class MotherboardRequest extends FormRequest
         return [
             'required' => 'O campo :attribute é obrigatório.',
             'integer' => 'O campo :attribute deve ser do tipo inteiro.',
+            'numeric' => 'O campo :attribute deve ser do tipo numérico.',
             'boolean' => 'O campo :attribute deve ser do tipo booleano.',
             'exists' => 'O campo :attribute deve ser um id existente.',
             'max' => 'O campo :attribute deve possuir no máximo :max caracteres.',
             'string' => 'O campo :attribute deve ser do tipo string.',
-            'unique' => 'Este computador já possui uma placa mãe.'
+            'unique' => 'Este computador já possui um processador.'
         ];
     }
 

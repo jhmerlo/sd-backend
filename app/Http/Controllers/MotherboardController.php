@@ -41,12 +41,11 @@ class MotherboardController extends Controller
     {
         $validatedData = $request->validated();
 
-        $motherboard = Motherboard::create([
-            'manufacturer' => $validatedData['manufacturer'],
-            'functional' => $validatedData['functional'],
-            'model' => $validatedData['model'],
-            'computer_id' => $validatedData['computer_id']
-        ]);
+        $motherboard = new Motherboard;
+
+        $motherboard->fill($validatedData);
+
+        $motherboard->save();
 
         return response()->json([
             'message' => "Placa mãe criada com sucesso!"
@@ -78,22 +77,22 @@ class MotherboardController extends Controller
     public function update(MotherboardRequest $request)
     {
         $motherboard = Motherboard::findOrFail($request->id);
+        
         $validatedData = $request->validated();
 
         $motherboard->fill($validatedData);
 
 
-        $changedComputerId = $motherboard->isDirty('computer_id') && $motherboard->getOriginal('computer_id') != null;
+        $changedComputerId = $motherboard->isDirty('computer_id');
         $changedFunctionalFieldToFalse = $motherboard->isDirty('functional') && $motherboard['functional'] == false;
 
         // situação 1: id do computador mudou = computador de origem deve voltar etapa 2
         // situação 2: id do computador não mudou mas functional = false => id do computador de origem deve ir para a etapa 2
         // situação 3: muda o id do computador e o functional = false => computador de origem deve ir para a etapa 2 e o computador destino nada acontece
-
-        if (count($motherboard->getDirty()) > 0) {
-            if ($changedComputerId || $changedFunctionalFieldToFalse) {
+        if ($motherboard->isDirty()) {
+            if (($changedComputerId || $changedFunctionalFieldToFalse) && !is_null($motherboard->getOriginal('computer_id'))) {
                 $computer = Computer::findOrFail($motherboard->getOriginal('computer_id'));
-                
+            
                 if ($computer['current_step'] > 2) {
                     $computer['current_step'] = 2;
                     $computer->save();

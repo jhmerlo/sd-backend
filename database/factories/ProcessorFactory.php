@@ -3,12 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Computer;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Motherboard>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Processor>
  */
-class MotherboardFactory extends Factory
+class ProcessorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,7 +19,10 @@ class MotherboardFactory extends Factory
         return [
             'model' => $this->faker->words(4, true),
             'manufacturer' => $this->faker->company(),
-            'functional' => $this->faker->boolean()
+            'functional' => $this->faker->boolean(),
+            'clock' => $this->faker->randomFloat(2, 2, 4),
+            'threads' => $this->faker->randomDigit(),
+            'cache' => $this->faker->randomDigit()
         ];
     }
 

@@ -42,4 +42,9 @@ class Computer extends Model
     {
         return $this->hasOne(Motherboard::class);
     }
+
+    public function processor ()
+    {
+        return $this->hasOne(Processor::class);
+    }
 }

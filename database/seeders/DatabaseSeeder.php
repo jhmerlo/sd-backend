@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Computer;
 use App\Models\Motherboard;
+use App\Models\Processor;
 
 class DatabaseSeeder extends Seeder
 {
@@ -48,7 +49,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ComputerSeeder::class,
-            MotherboardSeeder::class
+            MotherboardSeeder::class,
+            ProcessorSeeder::class
         ]);
     }
 }

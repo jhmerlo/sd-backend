@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\MotherboardController;
-
+use App\Http\Controllers\ProcessorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,5 +39,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('motherboard', 'store');
         Route::put('motherboard/{id}', 'update');
         Route::delete('motherboard/{id}', 'destroy');
+    });
+
+    Route::controller(ProcessorController::class)->group(function () {
+        Route::get('processors', 'index');
+        Route::get('processor/{id}', 'show');
+        Route::post('processor', 'store');
+        Route::put('processor/{id}', 'update');
+        Route::delete('processor/{id}', 'destroy');
     });
 });
