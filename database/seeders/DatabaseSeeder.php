@@ -15,7 +15,7 @@ use App\Models\Processor;
 use App\Models\PowerSupply;
 use App\Models\StorageDevice;
 use App\Models\RamMemory;
-
+use App\Models\Monitor;
 
 class DatabaseSeeder extends Seeder
 {
@@ -57,7 +57,8 @@ class DatabaseSeeder extends Seeder
             ProcessorSeeder::class,
             PowerSupplySeeder::class,
             StorageDeviceSeeder::class,
-            RamMemorySeeder::class
+            RamMemorySeeder::class,
+            MonitorSeeder::class
         ]);
     }
 }

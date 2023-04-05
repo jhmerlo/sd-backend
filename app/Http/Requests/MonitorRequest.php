@@ -7,7 +7,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
 
-class PowerSupplyRequest extends FormRequest
+class MonitorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,8 +31,9 @@ class PowerSupplyRequest extends FormRequest
             'functional' => 'funcional',
             'model' => 'modelo',
             'computer_id' => 'computador',
-            'electric_power' => 'potência (W)',
-            'voltage' => 'tensão (V)'
+            'panel' => 'painel',
+            'size' => 'tamanho (pol)',
+            'connections' => 'conexões'
         ];
     }
 
@@ -47,12 +48,12 @@ class PowerSupplyRequest extends FormRequest
             'manufacturer' => 'required|string|max:255',
             'functional' => 'required|boolean',
             'model' => 'required|string|max:255',
-            'electric_power' => 'numeric',
-            'voltage' => 'numeric',
+            'size' => 'required|numeric',
+            'connections' => 'required|string|max:255',
+            'panel' => 'required|string|max:255',
             'computer_id' => [
                 'integer',
-                'exists:computers,id',
-                Rule::unique('power_supplies','computer_id')->ignore($this->id)
+                'exists:computers,id'
             ]
         ];
     }
@@ -71,8 +72,7 @@ class PowerSupplyRequest extends FormRequest
             'boolean' => 'O campo :attribute deve ser do tipo booleano.',
             'exists' => 'O campo :attribute deve ser um id existente.',
             'max' => 'O campo :attribute deve possuir no máximo :max caracteres.',
-            'string' => 'O campo :attribute deve ser do tipo string.',
-            'unique' => 'Este computador já possui uma fonte de alimentação.'
+            'string' => 'O campo :attribute deve ser do tipo string.'
         ];
     }
 

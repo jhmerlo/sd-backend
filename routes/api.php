@@ -10,6 +10,7 @@ use App\Http\Controllers\ProcessorController;
 use App\Http\Controllers\PowerSupplyController;
 use App\Http\Controllers\StorageDeviceController;
 use App\Http\Controllers\RamMemoryController;
+use App\Http\Controllers\MonitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,5 +75,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('ram-memory', 'store');
         Route::put('ram-memory/{id}', 'update');
         Route::delete('ram-memory/{id}', 'destroy');
+    });
+
+    Route::controller(MonitorController::class)->group(function () {
+        Route::get('monitors', 'index');
+        Route::get('monitor/{id}', 'show');
+        Route::post('monitor', 'store');
+        Route::put('monitor/{id}', 'update');
+        Route::delete('monitor/{id}', 'destroy');
     });
 });

@@ -10,6 +10,7 @@ use App\Models\Processor;
 use App\Models\PowerSupply;
 use App\Models\StorageDevice;
 use App\Models\RamMemory;
+use App\Models\Monitor;
 
 class ComputerSeeder extends Seeder
 {
@@ -30,6 +31,7 @@ class ComputerSeeder extends Seeder
             ->has(PowerSupply::factory()->count(1)->functional())
             ->has(StorageDevice::factory()->count(2)->functional(1))
             ->has(RamMemory::factory()->count(2)->functional(1))
+            ->has(Monitor::factory()->count(2)->functional(1))
             ->step3()
             ->count(2)
             ->create();

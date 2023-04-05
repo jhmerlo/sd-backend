@@ -62,4 +62,9 @@ class Computer extends Model
     {
         return $this->hasMany(RamMemory::class);
     }
+
+    public function monitors ()
+    {
+        return $this->hasMany(Monitor::class);
+    }
 }

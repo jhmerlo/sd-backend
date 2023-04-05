@@ -119,7 +119,7 @@ class RamMemoryController extends Controller
         $ram_memory->delete();
 
         return response()->json([
-            'message' => "Memória RAM editada com sucesso!"
+            'message' => "Memória RAM deletada com sucesso!"
         ], 200);
     }
 }
