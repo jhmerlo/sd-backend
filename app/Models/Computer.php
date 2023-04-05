@@ -67,4 +67,9 @@ class Computer extends Model
     {
         return $this->hasMany(Monitor::class);
     }
+
+    public function gpus ()
+    {
+        return $this->hasMany(Gpu::class);
+    }
 }

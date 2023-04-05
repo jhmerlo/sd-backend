@@ -11,6 +11,7 @@ use App\Http\Controllers\PowerSupplyController;
 use App\Http\Controllers\StorageDeviceController;
 use App\Http\Controllers\RamMemoryController;
 use App\Http\Controllers\MonitorController;
+use App\Http\Controllers\GpuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,5 +84,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('monitor', 'store');
         Route::put('monitor/{id}', 'update');
         Route::delete('monitor/{id}', 'destroy');
+    });
+
+    Route::controller(GpuController::class)->group(function () {
+        Route::get('gpus', 'index');
+        Route::get('gpu/{id}', 'show');
+        Route::post('gpu', 'store');
+        Route::put('gpu/{id}', 'update');
+        Route::delete('gpu/{id}', 'destroy');
     });
 });
