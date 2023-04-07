@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BorrowerController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\MotherboardController;
@@ -92,5 +93,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('gpu', 'store');
         Route::put('gpu/{id}', 'update');
         Route::delete('gpu/{id}', 'destroy');
+    });
+
+    Route::controller(BorrowerController::class)->group(function () {
+        Route::get('borrowers', 'index');
+        Route::get('borrower/{id}', 'show');
+        Route::post('borrower', 'store');
+        Route::put('borrower/{id}', 'update');
+        Route::delete('borrower/{id}', 'destroy');
     });
 });

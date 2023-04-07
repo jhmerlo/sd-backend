@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 // Factories Imports
 use App\Models\User;
+use App\Models\Borrower;
 use App\Models\Computer;
 use App\Models\Motherboard;
 use App\Models\Processor;
@@ -60,7 +61,8 @@ class DatabaseSeeder extends Seeder
             StorageDeviceSeeder::class,
             RamMemorySeeder::class,
             MonitorSeeder::class,
-            GpuSeeder::class
+            GpuSeeder::class,
+            BorrowerSeeder::class
         ]);
     }
 }
