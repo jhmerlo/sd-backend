@@ -18,6 +18,7 @@ use App\Models\StorageDevice;
 use App\Models\RamMemory;
 use App\Models\Monitor;
 use App\Models\Gpu;
+use App\Models\Loan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -62,7 +63,8 @@ class DatabaseSeeder extends Seeder
             RamMemorySeeder::class,
             MonitorSeeder::class,
             GpuSeeder::class,
-            BorrowerSeeder::class
+            BorrowerSeeder::class,
+            LoanSeeder::class
         ]);
     }
 }

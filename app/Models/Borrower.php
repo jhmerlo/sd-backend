@@ -22,4 +22,9 @@ class Borrower extends Model
         'institutional_id',
         'telephone'
     ];
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
 }

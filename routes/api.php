@@ -13,6 +13,7 @@ use App\Http\Controllers\StorageDeviceController;
 use App\Http\Controllers\RamMemoryController;
 use App\Http\Controllers\MonitorController;
 use App\Http\Controllers\GpuController;
+use App\Http\Controllers\LoanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,5 +102,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('borrower', 'store');
         Route::put('borrower/{id}', 'update');
         Route::delete('borrower/{id}', 'destroy');
+    });
+
+    Route::controller(LoanController::class)->group(function () {
+        Route::get('loans', 'index');
+        // Route::get('loan/{id}', 'show');
+        Route::post('loan', 'store');
+        // Route::put('loan/{id}', 'update');
+        // Route::delete('loan/{id}', 'destroy');
     });
 });
