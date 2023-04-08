@@ -33,4 +33,9 @@ class Processor extends Model
     {
         return $this->morphOne(Loan::class, 'loanable');
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }

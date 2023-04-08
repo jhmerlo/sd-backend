@@ -38,4 +38,9 @@ class Loan extends Model
     {
         return $this->belongsTo(Borrower::class, 'borrower_id', 'institutional_id');
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }
