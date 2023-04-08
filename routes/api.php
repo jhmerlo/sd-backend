@@ -106,9 +106,9 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
 
     Route::controller(LoanController::class)->group(function () {
         Route::get('loans', 'index');
-        // Route::get('loan/{id}', 'show');
+        Route::get('loan/{id}', 'show');
         Route::post('loan', 'store');
-        // Route::put('loan/{id}', 'update');
-        // Route::delete('loan/{id}', 'destroy');
+        Route::put('loan/{id}', 'update');
+        Route::delete('loan/{id}', 'destroy');
     });
 });

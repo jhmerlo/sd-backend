@@ -27,4 +27,9 @@ class PowerSupply extends Model
     {
         return $this->belongsTo(Computer::class);
     }
+
+    public function loan()
+    {
+        return $this->morphOne(Loan::class, 'loanable');
+    }
 }
