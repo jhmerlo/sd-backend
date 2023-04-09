@@ -20,6 +20,7 @@ use App\Models\Monitor;
 use App\Models\Gpu;
 use App\Models\Loan;
 use App\Models\Comment;
+use App\Models\MaintenanceHistory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -66,7 +67,8 @@ class DatabaseSeeder extends Seeder
             GpuSeeder::class,
             BorrowerSeeder::class,
             LoanSeeder::class,
-            CommentSeeder::class
+            CommentSeeder::class,
+            MaintenanceHistorySeeder::class
         ]);
     }
 }

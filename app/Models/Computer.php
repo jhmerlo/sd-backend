@@ -82,4 +82,9 @@ class Computer extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function maintenanceHistories()
+    {
+        return $this->hasMany(MaintenanceHistory::class);
+    }
 }

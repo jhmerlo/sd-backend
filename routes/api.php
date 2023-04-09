@@ -14,6 +14,7 @@ use App\Http\Controllers\RamMemoryController;
 use App\Http\Controllers\MonitorController;
 use App\Http\Controllers\GpuController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\MaintenanceHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,5 +111,10 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::post('loan', 'store');
         Route::put('loan/{id}', 'update');
         Route::delete('loan/{id}', 'destroy');
+    });
+
+    Route::controller(MaintenanceHistoryController::class)->group(function () {
+        Route::get('computer/{computer_id}/maintenance-histories', 'index');
+        Route::post('maintenance-history', 'store');
     });
 });

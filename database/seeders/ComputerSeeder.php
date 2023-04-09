@@ -13,6 +13,8 @@ use App\Models\RamMemory;
 use App\Models\Monitor;
 use App\Models\Gpu;
 
+use App\Models\MaintenanceHistory;
+
 class ComputerSeeder extends Seeder
 {
     /**
@@ -34,6 +36,7 @@ class ComputerSeeder extends Seeder
             ->has(RamMemory::factory()->count(2)->functional(1))
             ->has(Monitor::factory()->count(2)->functional(1))
             ->has(Gpu::factory()->count(2)->functional(1))
+            ->has(MaintenanceHistory::factory()->count(2))
             ->step3()
             ->count(2)
             ->create();
