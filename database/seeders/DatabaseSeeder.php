@@ -21,6 +21,7 @@ use App\Models\Gpu;
 use App\Models\Loan;
 use App\Models\Comment;
 use App\Models\MaintenanceHistory;
+use App\Models\UserTestHistory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -68,7 +69,8 @@ class DatabaseSeeder extends Seeder
             BorrowerSeeder::class,
             LoanSeeder::class,
             CommentSeeder::class,
-            MaintenanceHistorySeeder::class
+            MaintenanceHistorySeeder::class,
+            UserTestHistorySeeder::class
         ]);
     }
 }

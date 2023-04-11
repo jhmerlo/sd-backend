@@ -87,4 +87,9 @@ class Computer extends Model
     {
         return $this->hasMany(MaintenanceHistory::class);
     }
+
+    public function userTestHistories()
+    {
+        return $this->hasMany(UserTestHistory::class);
+    }
 }
