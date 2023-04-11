@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GpuRequest;
 use Illuminate\Http\Request;
+use Auth;
 use App\Models\Gpu;
 use App\Models\Computer;
+use App\Models\TransferHistory;
 
 class GpuController extends Controller
 {
@@ -97,6 +99,21 @@ class GpuController extends Controller
                     $computer->save();
                 }
             }
+            
+            if ($changedComputerId) {
+                $transfer_history = new TransferHistory;
+
+                $transfer_history->fill([
+                    'source_id' => $gpu->getOriginal('computer_id'),
+                    'target_id' => $gpu['computer_id'],
+                    'responsible_id' => Auth::user()->institutional_id,
+                    'transferable_id' => $gpu['id'],
+                    'transferable_type' => 'App\\Models\\Gpu'
+                ]);
+                
+                $transfer_history->save();
+            }
+            
             $gpu->save();
         }
         

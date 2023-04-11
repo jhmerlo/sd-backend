@@ -37,4 +37,9 @@ class Gpu extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function transferHistories()
+    {
+        return $this->morphMany(TransferHistory::class, 'transferable');
+    }
 }

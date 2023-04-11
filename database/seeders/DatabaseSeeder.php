@@ -22,6 +22,8 @@ use App\Models\Loan;
 use App\Models\Comment;
 use App\Models\MaintenanceHistory;
 use App\Models\UserTestHistory;
+use App\Models\TransferHistory;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -70,7 +72,8 @@ class DatabaseSeeder extends Seeder
             LoanSeeder::class,
             CommentSeeder::class,
             MaintenanceHistorySeeder::class,
-            UserTestHistorySeeder::class
+            UserTestHistorySeeder::class,
+            TransferHistorySeeder::class
         ]);
     }
 }
