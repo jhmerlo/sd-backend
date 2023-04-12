@@ -6,6 +6,8 @@ use App\Http\Requests\MotherboardRequest;
 use Illuminate\Http\Request;
 use App\Models\Motherboard;
 use App\Models\Computer;
+use App\Models\TransferHistory;
+use Auth;
 
 class MotherboardController extends Controller
 {
@@ -98,6 +100,21 @@ class MotherboardController extends Controller
                     $computer->save();
                 }
             }
+
+            if ($changedComputerId) {
+                $transfer_history = new TransferHistory;
+
+                $transfer_history->fill([
+                    'source_id' => $motherboard->getOriginal('computer_id'),
+                    'target_id' => $motherboard['computer_id'],
+                    'responsible_id' => Auth::user()->institutional_id,
+                    'transferable_id' => $motherboard['id'],
+                    'transferable_type' => 'App\\Models\\Motherboard'
+                ]);
+                
+                $transfer_history->save();
+            }
+
             $motherboard->save();
         }
         

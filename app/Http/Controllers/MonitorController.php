@@ -6,6 +6,8 @@ use App\Http\Requests\MonitorRequest;
 use Illuminate\Http\Request;
 use App\Models\Monitor;
 use App\Models\Computer;
+use App\Models\TransferHistory;
+use Auth;
 
 class MonitorController extends Controller
 {
@@ -97,6 +99,21 @@ class MonitorController extends Controller
                     $computer->save();
                 }
             }
+
+            if ($changedComputerId) {
+                $transfer_history = new TransferHistory;
+
+                $transfer_history->fill([
+                    'source_id' => $monitor->getOriginal('computer_id'),
+                    'target_id' => $monitor['computer_id'],
+                    'responsible_id' => Auth::user()->institutional_id,
+                    'transferable_id' => $monitor['id'],
+                    'transferable_type' => 'App\\Models\\Monitor'
+                ]);
+                
+                $transfer_history->save();
+            }
+
             $monitor->save();
         }
         

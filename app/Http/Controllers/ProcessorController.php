@@ -6,6 +6,8 @@ use App\Http\Requests\ProcessorRequest;
 use Illuminate\Http\Request;
 use App\Models\Processor;
 use App\Models\Computer;
+use App\Models\TransferHistory;
+use Auth;
 
 class ProcessorController extends Controller
 {
@@ -94,6 +96,21 @@ class ProcessorController extends Controller
                     $computer->save();
                 }
             }
+
+            if ($changedComputerId) {
+                $transfer_history = new TransferHistory;
+
+                $transfer_history->fill([
+                    'source_id' => $processor->getOriginal('computer_id'),
+                    'target_id' => $processor['computer_id'],
+                    'responsible_id' => Auth::user()->institutional_id,
+                    'transferable_id' => $processor['id'],
+                    'transferable_type' => 'App\\Models\\Processor'
+                ]);
+                
+                $transfer_history->save();
+            }
+
             $processor->save();
         }
         

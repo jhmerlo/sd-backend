@@ -6,6 +6,8 @@ use App\Http\Requests\RamMemoryRequest;
 use Illuminate\Http\Request;
 use App\Models\RamMemory;
 use App\Models\Computer;
+use App\Models\TransferHistory;
+use Auth;
 
 class RamMemoryController extends Controller
 {
@@ -97,6 +99,21 @@ class RamMemoryController extends Controller
                     $computer->save();
                 }
             }
+
+            if ($changedComputerId) {
+                $transfer_history = new TransferHistory;
+
+                $transfer_history->fill([
+                    'source_id' => $ram_memory->getOriginal('computer_id'),
+                    'target_id' => $ram_memory['computer_id'],
+                    'responsible_id' => Auth::user()->institutional_id,
+                    'transferable_id' => $ram_memory['id'],
+                    'transferable_type' => 'App\\Models\\RamMemory'
+                ]);
+                
+                $transfer_history->save();
+            }
+
             $ram_memory->save();
         }
         

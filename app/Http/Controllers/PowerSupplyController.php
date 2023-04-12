@@ -6,6 +6,8 @@ use App\Http\Requests\PowerSupplyRequest;
 use Illuminate\Http\Request;
 use App\Models\PowerSupply;
 use App\Models\Computer;
+use App\Models\TransferHistory;
+use Auth;
 
 class PowerSupplyController extends Controller
 {
@@ -94,6 +96,21 @@ class PowerSupplyController extends Controller
                     $computer->save();
                 }
             }
+
+            if ($changedComputerId) {
+                $transfer_history = new TransferHistory;
+
+                $transfer_history->fill([
+                    'source_id' => $power_supply->getOriginal('computer_id'),
+                    'target_id' => $power_supply['computer_id'],
+                    'responsible_id' => Auth::user()->institutional_id,
+                    'transferable_id' => $power_supply['id'],
+                    'transferable_type' => 'App\\Models\\PowerSupply'
+                ]);
+                
+                $transfer_history->save();
+            }
+
             $power_supply->save();
         }
         

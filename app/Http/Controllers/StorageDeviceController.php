@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StorageDeviceRequest;
 use App\Models\StorageDevice;
 use App\Models\Computer;
+use App\Models\TransferHistory;
+use Auth;
 
 class StorageDeviceController extends Controller
 {
@@ -97,6 +99,21 @@ class StorageDeviceController extends Controller
                     $computer->save();
                 }
             }
+
+            if ($changedComputerId) {
+                $transfer_history = new TransferHistory;
+
+                $transfer_history->fill([
+                    'source_id' => $storage_device->getOriginal('computer_id'),
+                    'target_id' => $storage_device['computer_id'],
+                    'responsible_id' => Auth::user()->institutional_id,
+                    'transferable_id' => $storage_device['id'],
+                    'transferable_type' => 'App\\Models\\StorageDevice'
+                ]);
+                
+                $transfer_history->save();
+            }
+
             $storage_device->save();
         }
         

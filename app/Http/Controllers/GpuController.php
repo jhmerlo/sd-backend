@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GpuRequest;
 use Illuminate\Http\Request;
-use Auth;
 use App\Models\Gpu;
 use App\Models\Computer;
 use App\Models\TransferHistory;
+use Auth;
 
 class GpuController extends Controller
 {
