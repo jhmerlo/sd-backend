@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
         $this->renderable(function (AuthenticationException $e, $request) {
             if ($request->is('api/*')) {
                 return response()->json([
-                    'message' => 'Não autenticado.'
+                    'message' => 'Usuário não autenticado para realizar esta solicitação.'
                 ], 401);
             }
         });

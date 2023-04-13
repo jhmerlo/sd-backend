@@ -34,7 +34,7 @@ class ComputerController extends Controller
             }
         }
 
-        return $query->with(['responsible', 'motherboard', 'comments', 'comments.user'])->simplePaginate($recordsPerPage);
+        return $query->with(['responsible', 'motherboard', 'comments', 'comments.user'])->paginate($recordsPerPage);
     }
 
     /**
