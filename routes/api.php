@@ -40,6 +40,13 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::get('computer/{id}', 'show');
         Route::post('computer', 'store');
         Route::delete('computer/{id}', 'destroy');
+
+        Route::put('computer/{id}/sorting-step', 'sortingUpdate');
+        Route::put('computer/{id}/hardware-tests-step', 'hardwareTestsUpdate');
+        Route::put('computer/{id}/maintenance-step', 'maintenanceUpdate');
+        Route::put('computer/{id}/network-and-peripherals-step', 'networkAndPeripheralsUpdate');
+        Route::put('computer/{id}/user-tests-step', 'userTestsUpdate');
+        Route::put('computer/{id}/reset-steps', 'resetSteps');
     });
 
     Route::controller(MotherboardController::class)->group(function () {

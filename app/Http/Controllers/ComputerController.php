@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ComputerRequest;
+use App\Http\Requests\SortingRequest;
+use App\Http\Requests\HardwareTestsRequest;
+use App\Http\Requests\MaintenanceRequest;
+use App\Http\Requests\NetworkAndPeripheralsRequest;
+use App\Http\Requests\UserTestsRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Computer;
@@ -38,20 +43,16 @@ class ComputerController extends Controller
      * @param  \App\Http\Requests\StoreComputerRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ComputerRequest $request)
+    public function store(SortingRequest $request)
     {
         $validatedData = $request->validated();
 
-        $computer = Computer::create([
-            'type' => $validatedData['type'],
-            'patrimony' => $validatedData['patrimony'] ?? null,
-            'description' => $validatedData['description'],
-            'manufacturer' => $validatedData['manufacturer'],
-            'sanitized' => $validatedData['sanitized'],
-            'functional' => $validatedData['functional'],
-            'current_step' => $validatedData['current_step'],
-            'current_step_responsible_id' => $validatedData['current_step_responsible_id']
-        ]);
+        $computer = new Computer;
+        $computer->fill($validatedData);
+
+        $computer->current_step = 1;
+
+        $computer->save();
 
         return response()->json([
             'message' => "Computador criado com sucesso!"
@@ -80,9 +81,159 @@ class ComputerController extends Controller
      * @param  \App\Models\Computer  $computer
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateComputerRequest $request, Computer $computer)
+    public function sortingUpdate (SortingRequest $request)
     {
-        //
+        $computer = Computer::findOrFail($request->id);
+
+        if ($computer->current_step != 1) {
+            return response()->json([
+                'message' => 'Computador não está na fase adequada para esta solicitação.'
+            ], 400);
+        }
+
+        $validatedData = $request->validated();
+
+        $computer->fill($validatedData);
+
+        $computer->current_step = 2;
+
+        $computer->save();
+
+        return response()->json([
+            'message' => 'Computador movido para a próxima etapa.'
+        ], 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateComputerRequest  $request
+     * @param  \App\Models\Computer  $computer
+     * @return \Illuminate\Http\Response
+     */
+    public function hardwareTestsUpdate (HardwareTestsRequest $request)
+    {
+        // update responsible 
+        $computer = Computer::findOrFail($request->id);
+        $validatedData = $request->validated();
+
+        if ($computer->current_step != 2) {
+            return response()->json([
+                'message' => 'Computador não está na fase adequada para esta solicitação.'
+            ], 400);
+        }
+
+        $computer->fill($validatedData);
+
+        $motherboard = $computer->motherboard;
+        $processor = $computer->processor;
+        $gpus = $computer->gpus;
+        $monitors = $computer->monitors;
+        $power_supply = $computer->powerSupply;
+        $ram_memories = $computer->ramMemories;
+        $storage_devices = $computer->storageDevices;
+
+        $validMotherboard = is_null($motherboard) ? false : $motherboard->functional;
+        $validProcessor = is_null($processor) ? false : $processor->functional;
+        $validPowerSupply = is_null($power_supply) ? false : $power_supply->functional;
+        $validGpu = is_null($gpus) ? false : count($gpus->where('functional', true)) >= 1;
+        $validMonitor = is_null($monitors) ? false : count($monitors->where('functional', true)) >= 1;
+        $validRamMemory = is_null($ram_memories) ? false : count($ram_memories->where('functional', true)) >= 1;
+        $validStorageDevice = is_null($storage_devices) ? false : count($storage_devices->where('functional', true)) >= 1;
+
+        if ($validMotherboard && $validProcessor && $validGpu && $validMonitor && $validPowerSupply && $validRamMemory && $validStorageDevice) {
+            $computer->current_step = 3;
+            $computer->save();
+
+            return response()->json([
+                'message' => 'Computador movido para a próxima etapa.'
+            ], 200);
+        }
+
+        $computer->save();
+
+        return response()->json([
+            'message' => 'Responsável editado com sucesso. O computador permanece na mesma etapa pois não possui os componentes funcionais suficientes.'
+        ]);
+    }
+
+    public function maintenanceUpdate (MaintenanceRequest $request)
+    {
+        $computer = Computer::findOrFail($request->id);
+        $validatedData = $request->validated();
+
+        if ($computer->current_step != 3) {
+            return response()->json([
+                'message' => 'Computador não está na fase adequada para esta solicitação.'
+            ], 400);
+        }
+
+        $computer->fill($validatedData);
+
+        $computer->current_step = 4;
+
+        $computer->save();
+
+        return response()->json([
+            'message' => 'Computador movido para a próxima etapa.'
+        ], 200);
+    }
+
+    public function networkAndPeripheralsUpdate (NetworkAndPeripheralsRequest $request)
+    {
+        $computer = Computer::findOrFail($request->id);
+        $validatedData = $request->validated();
+
+        if ($computer->current_step != 4) {
+            return response()->json([
+                'message' => 'Computador não está na fase adequada para esta solicitação.'
+            ], 400);
+        }
+
+        $computer->fill($validatedData);
+
+        $computer->current_step = 5;
+
+        $computer->save();
+
+        return response()->json([
+            'message' => 'Computador movido para a próxima etapa.'
+        ], 200);
+    }
+
+    public function userTestsUpdate (UserTestsRequest $request)
+    {
+        $computer = Computer::findOrFail($request->id);
+        $validatedData = $request->validated();
+
+        if ($computer->current_step != 5) {
+            return response()->json([
+                'message' => 'Computador não está na fase adequada para esta solicitação.'
+            ], 400);
+        }
+
+        $computer->fill($validatedData);
+
+        $computer->current_step = 6;
+
+        $computer->save();
+
+        return response()->json([
+            'message' => 'Computador movido para a próxima etapa.'
+        ], 200);
+    }
+
+    public function resetSteps (Request $request)
+    {
+        $computer = Computer::findOrFail($request->id);
+
+        $computer->current_step = 1;
+
+        $computer->save();
+
+        return response()->json([
+            'message' => 'Computador movido para a etapa inicial.'
+        ], 200);
     }
 
     /**

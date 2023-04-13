@@ -30,9 +30,9 @@ class ComputerSeeder extends Seeder
             ->create();
 
         Computer::factory()
-            ->has(Motherboard::factory()->count(1)->functional())
-            ->has(Processor::factory()->count(1)->functional())
-            ->has(PowerSupply::factory()->count(1)->functional())
+            ->has(Motherboard::factory()->count(1)->functional(1))
+            ->has(Processor::factory()->count(1)->functional(1))
+            ->has(PowerSupply::factory()->count(1)->functional(1))
             ->has(StorageDevice::factory()->count(2)->functional(1))
             ->has(RamMemory::factory()->count(2)->functional(1))
             ->has(Monitor::factory()->count(2)->functional(1))
