@@ -22,11 +22,11 @@ class ComputerController extends Controller
      */
     public function index(Request $request)
     {
-        $recordsPerPage = 10;
+        $recordsPerPage = 12;
 
         $query = Computer::query();
 
-        $filters = ['type', 'currentStep'];
+        $filters = ['type', 'current_step'];
 
         foreach ($filters as $filter) {
             if ($request->filled($filter)) {
@@ -34,7 +34,7 @@ class ComputerController extends Controller
             }
         }
 
-        return $query->with(['responsible', 'motherboard', 'comments', 'comments.user'])->paginate($recordsPerPage);
+        return $query->orderBy('updated_at', 'desc')->with(['responsible', 'motherboard', 'comments', 'comments.user'])->paginate($recordsPerPage);
     }
 
     /**
@@ -226,6 +226,12 @@ class ComputerController extends Controller
     public function resetSteps (Request $request)
     {
         $computer = Computer::findOrFail($request->id);
+
+        if ($computer->current_step == 1) {
+            return response()->json([
+                'message' => 'Este computador já se encontra na etapa de triagem.'
+            ], 400);
+        } 
 
         $computer->current_step = 1;
 
