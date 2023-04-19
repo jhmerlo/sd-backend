@@ -26,11 +26,18 @@ class ComputerController extends Controller
 
         $query = Computer::query();
 
-        $filters = ['type', 'current_step'];
+        $exactFilters = ['type', 'current_step', 'patrimony', 'current_step_responsible_id', 'id'];
+        $likeFilters = ['manufacturer', 'operational_system'];
 
-        foreach ($filters as $filter) {
+        foreach ($exactFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request[$filter]);
+            }
+        }
+
+        foreach ($likeFilters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, 'ILIKE', '%'. $request[$filter] . '%');
             }
         }
 

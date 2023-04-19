@@ -17,6 +17,8 @@ use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MaintenanceHistoryController;
 use App\Http\Controllers\UserTestHistoryController;
 
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,6 +36,8 @@ Route::post('resend-email-verification', [EmailVerificationController::class, 'r
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 
 Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
+
+    Route::get('user-select-options-index', [UserController::class, 'userSelectOptionsIndex']);
 
     Route::post('logout', [AuthController::class, 'revokeAccessTokens']);
 
