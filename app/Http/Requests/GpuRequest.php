@@ -31,7 +31,7 @@ class GpuRequest extends FormRequest
             'functional' => 'funcional',
             'model' => 'modelo',
             'computer_id' => 'computador',
-            'clock' => 'clock (Mhz)',
+            'clock' => 'clock (MHz)',
             'size' => 'capacidade (GB)',
             'integrated' => 'integrada'
         ];
@@ -51,10 +51,7 @@ class GpuRequest extends FormRequest
             'size' => 'required|numeric',
             'clock' => 'required|numeric',
             'integrated' => 'required|boolean',
-            'computer_id' => [
-                'integer',
-                'exists:computers,id'
-            ]
+            'computer_id' => 'integer|exists:computers,id|nullable'
         ];
     }
 

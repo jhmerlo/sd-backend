@@ -47,13 +47,13 @@ class UserTestHistoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'auto_boot' => 'boolean',
-            'initialization' => 'boolean',
-            'shortcuts' => 'boolean',
-            'correct_date' => 'boolean',
-            'gsuite_performance' => 'string|max:255',
-            'wine_performance' => 'string|max:255',
-            'youtube_performance' => 'string|max:255',
+            'auto_boot' => 'nullable|boolean',
+            'initialization' => 'nullable|boolean',
+            'shortcuts' => 'nullable|boolean',
+            'correct_date' => 'nullable|boolean',
+            'gsuite_performance' => 'nullable|string|max:255',
+            'wine_performance' => 'nullable|string|max:255',
+            'youtube_performance' => 'nullable|string|max:255',
             'responsible_id' => 'required|integer|exists:users,institutional_id|min:10',
             'computer_id' => 'required|integer|exists:computers,id'
         ];

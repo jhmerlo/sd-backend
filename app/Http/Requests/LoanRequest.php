@@ -47,7 +47,7 @@ class LoanRequest extends FormRequest
         return [
             'start_date' => 'required|date',
             'end_date' => 'required|date',
-            'return_date' => 'date',
+            'return_date' => 'date|nullable',
             'responsible_id' => 'required|integer|exists:users,institutional_id|min:10',
             'borrower_id' => 'required|integer|exists:borrowers,institutional_id|min:10',
             'loanable_id' => 'required|integer',

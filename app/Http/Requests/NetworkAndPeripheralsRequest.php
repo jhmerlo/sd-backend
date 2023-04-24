@@ -44,13 +44,13 @@ class NetworkAndPeripherals extends FormRequest
     public function rules()
     {
         return [
-            'hdmi_input' => 'boolean',
-            'vga_input' => 'boolean',
-            'dvi_input' => 'boolean',
-            'local_network_adapter' => 'boolean',
-            'wireless_network_adapter' => 'boolean',
-            'audio_input_and_output' => 'boolean',
-            'cd_rom' => 'boolean'
+            'hdmi_input' => 'nullable|boolean',
+            'vga_input' => 'nullable|boolean',
+            'dvi_input' => 'nullable|boolean',
+            'local_network_adapter' => 'nullable|boolean',
+            'wireless_network_adapter' => 'nullable|boolean',
+            'audio_input_and_output' => 'nullable|boolean',
+            'cd_rom' => 'nullable|boolean'
         ];
     }
 

@@ -47,12 +47,12 @@ class SortingRequest extends FormRequest
         return [
             'type' => 'required|string|max:255',
             'manufacturer' => 'required|string|max:255',
-            'sanitized' => 'boolean',
-            'functional' => 'boolean',
+            'sanitized' => 'nullable|boolean',
+            'functional' => 'nullable|boolean',
             'current_step_responsible_id' => 'required|integer|exists:users,institutional_id|min:10',
-            'operational_system' => 'string|max:255',
-            'description' => 'string|required|max:255',
-            'patrimony' => 'string|max:255'
+            'operational_system' => 'nullable|string|max:255',
+            'description' => 'nullable|string|required|max:255',
+            'patrimony' => 'nullable|string|max:255'
         ];
     }
 

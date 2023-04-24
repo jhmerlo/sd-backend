@@ -90,9 +90,8 @@ class GpuController extends Controller
         if ($gpu->isDirty()) {
             if (($changedComputerId || $changedFunctionalFieldToFalse) && !is_null($gpu->getOriginal('computer_id'))) {
                 $computer = Computer::findOrFail($gpu->getOriginal('computer_id'));
-
                 //check if exists other functional Gpu
-                $existsOtherFunctional = count($computer->ramMemories->where('functional', true)) >= 2;
+                $existsOtherFunctional = count($computer->gpus->where('functional', true)) >= 2;
 
                 if ($computer['current_step'] > 2 && !$existsOtherFunctional) {
                     $computer['current_step'] = 2;

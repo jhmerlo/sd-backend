@@ -74,7 +74,7 @@ class ComputerController extends Controller
      */
     public function show(Request $request)
     {
-        $computer = Computer::with('responsible')->findOrFail($request->id);
+        $computer = Computer::with(['responsible', 'motherboard', 'processor', 'ramMemories', 'storageDevices', 'powerSupply', 'monitors', 'gpus'])->findOrFail($request->id);
 
         return response()->json([
             'computer' => $computer

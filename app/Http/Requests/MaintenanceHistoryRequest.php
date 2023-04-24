@@ -46,12 +46,12 @@ class MaintenanceHistoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'software_installation' => 'string|max:255',
-            'operational_system_installation' => 'string|max:255',
-            'formatting' => 'string|max:255',
-            'battery_change' => 'string|max:255',
-            'suction' => 'string|max:255',
-            'other' => 'string|max:255',
+            'software_installation' => 'nullable|string|max:255',
+            'operational_system_installation' => 'nullable|string|max:255',
+            'formatting' => 'nullable|string|max:255',
+            'battery_change' => 'nullable|string|max:255',
+            'suction' => 'nullable|string|max:255',
+            'other' => 'nullable|string|max:255',
             'responsible_id' => 'required|integer|exists:users,institutional_id|min:10',
             'computer_id' => 'required|integer|exists:computers,id'
         ];

@@ -92,7 +92,7 @@ class MonitorController extends Controller
                 $computer = Computer::findOrFail($monitor->getOriginal('computer_id'));
 
                 //check if exists other functional Monitor
-                $existsOtherFunctional = count($computer->ramMemories->where('functional', true)) >= 2;
+                $existsOtherFunctional = count($computer->monitors->where('functional', true)) >= 2;
 
                 if ($computer['current_step'] > 2 && !$existsOtherFunctional) {
                     $computer['current_step'] = 2;

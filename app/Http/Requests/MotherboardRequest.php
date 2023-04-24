@@ -48,7 +48,8 @@ class MotherboardRequest extends FormRequest
             'computer_id' => [
                 'integer',
                 'exists:computers,id',
-                Rule::unique('motherboards','computer_id')->ignore($this->id)
+                Rule::unique('motherboards','computer_id')->ignore($this->id),
+                'nullable'
             ]
         ];
     }

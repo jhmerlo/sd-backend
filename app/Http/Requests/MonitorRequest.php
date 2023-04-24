@@ -51,10 +51,7 @@ class MonitorRequest extends FormRequest
             'size' => 'required|numeric',
             'connections' => 'required|string|max:255',
             'panel' => 'required|string|max:255',
-            'computer_id' => [
-                'integer',
-                'exists:computers,id'
-            ]
+            'computer_id' => 'integer|exists:computers,id|nullable'
         ];
     }
 

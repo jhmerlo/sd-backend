@@ -48,13 +48,14 @@ class ProcessorRequest extends FormRequest
             'manufacturer' => 'required|string|max:255',
             'functional' => 'required|boolean',
             'model' => 'required|string|max:255',
-            'clock' => 'numeric',
-            'threads' => 'integer',
-            'cache' => 'integer',
+            'clock' => 'numeric|nullable',
+            'threads' => 'integer|nullable',
+            'cache' => 'integer|nullable',
             'computer_id' => [
                 'integer',
                 'exists:computers,id',
-                Rule::unique('processors','computer_id')->ignore($this->id)
+                Rule::unique('processors','computer_id')->ignore($this->id),
+                'nullable'
             ]
         ];
     }

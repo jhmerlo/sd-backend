@@ -65,7 +65,7 @@ class StorageDeviceController extends Controller
         $storage_device = StorageDevice::findOrFail($request->id);
 
         return response()->json([
-            'storageDevice' => $storage_device
+            'storage_device' => $storage_device
         ], 200);
     }
 

@@ -65,7 +65,7 @@ class PowerSupplyController extends Controller
         $power_supply = PowerSupply::findOrFail($request->id);
 
         return response()->json([
-            'powerSupply' => $power_supply
+            'power_supply' => $power_supply
         ], 200);
     }
 

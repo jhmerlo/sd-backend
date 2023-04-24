@@ -65,7 +65,7 @@ class RamMemoryController extends Controller
         $ram_memory = RamMemory::findOrFail($request->id);
 
         return response()->json([
-            'ramMemory' => $ram_memory
+            'ram_memory' => $ram_memory
         ], 200);
     }
 

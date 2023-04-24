@@ -50,7 +50,7 @@ class Computer extends Model
 
     public function powerSupply ()
     {
-        return $this->hasOne(Processor::class);
+        return $this->hasOne(PowerSupply::class);
     }
 
     public function storageDevices ()

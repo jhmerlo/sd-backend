@@ -53,7 +53,8 @@ class StorageDeviceRequest extends FormRequest
             'connection_technology' => 'required|string|max:255',
             'computer_id' => [
                 'integer',
-                'exists:computers,id'
+                'exists:computers,id',
+                'nullable'
             ]
         ];
     }
