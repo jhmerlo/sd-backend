@@ -16,7 +16,7 @@ use App\Http\Controllers\GpuController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MaintenanceHistoryController;
 use App\Http\Controllers\UserTestHistoryController;
-
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -137,5 +137,9 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
     Route::controller(UserTestHistoryController::class)->group(function () {
         Route::get('computer/{computer_id}/user-test-histories', 'index');
         Route::post('user-test-history', 'store');
+    });
+
+    Route::controller(CommentController::class)->group(function () {
+        Route::post('comment', 'store');
     });
 });

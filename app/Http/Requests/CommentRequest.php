@@ -28,7 +28,6 @@ class CommentRequest extends FormRequest
     {
         return [
             'body' => 'corpo',
-            'user_id' => 'id do usuário',
             'commentable_id' => 'id do item de comentário',
             'commentable_type' => 'tipo do item de comentário'
         ];
@@ -43,7 +42,6 @@ class CommentRequest extends FormRequest
     {
         return [
             'body' => 'required|string',
-            'user_id' => 'required|integer|exists:users,institutional_id|min:10',
             'commentable_id' => 'required|integer',
             'commentable_type' => 'required|string|max:255'
         ];

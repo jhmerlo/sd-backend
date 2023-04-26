@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 
@@ -23,10 +24,13 @@ class CommentController extends Controller
             $commentable = $validatedData['commentable_type']::findOrFail($validatedData['commentable_id']);
                 $comment = new Comment;
                 $comment->fill($validatedData);
+
+                $comment->user_id = Auth::user()->institutional_id;
+
                 $comment->save();
 
                 return response()->json([
-                    'message' => 'Comentário criado com sucesso.'
+                    'message' => 'Comentário adicionado com sucesso.'
                 ], 200);
         }
 
