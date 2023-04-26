@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ComputerRequest;
 use App\Http\Requests\SortingRequest;
-use App\Http\Requests\HardwareTestsRequest;
+use App\Http\Requests\ResponsibleRequest;
 use App\Http\Requests\MaintenanceRequest;
 use App\Http\Requests\NetworkAndPeripheralsRequest;
 use App\Http\Requests\UserTestsRequest;
@@ -118,19 +119,15 @@ class ComputerController extends Controller
      * @param  \App\Models\Computer  $computer
      * @return \Illuminate\Http\Response
      */
-    public function hardwareTestsUpdate (HardwareTestsRequest $request)
+    public function hardwareTestsUpdate (Request $request)
     {
-        // update responsible 
         $computer = Computer::findOrFail($request->id);
-        $validatedData = $request->validated();
 
         if ($computer->current_step != 2) {
             return response()->json([
                 'message' => 'Computador não está na fase adequada para esta solicitação.'
             ], 400);
         }
-
-        $computer->fill($validatedData);
 
         $motherboard = $computer->motherboard;
         $processor = $computer->processor;
@@ -155,13 +152,11 @@ class ComputerController extends Controller
             return response()->json([
                 'message' => 'Computador movido para a próxima etapa.'
             ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Computador não possui os componentes mínimos para seguir para a próxima etapa.'
+            ], 400);
         }
-
-        $computer->save();
-
-        return response()->json([
-            'message' => 'Responsável editado com sucesso. O computador permanece na mesma etapa pois não possui os componentes funcionais suficientes.'
-        ]);
     }
 
     public function maintenanceUpdate (MaintenanceRequest $request)
@@ -263,6 +258,20 @@ class ComputerController extends Controller
 
         return response()->json([
             'message' => "Computador deletado com sucesso!"
+        ], 200);
+    }
+
+    public function changeResponsible(ResponsibleRequest $request)
+    {  
+        $computer = Computer::findOrFail($request->id);
+        $validatedData = $request->validated();
+
+        $computer->current_step_responsible_id = $validatedData['current_step_responsible_id'];
+
+        $computer->save();
+
+        return response()->json([
+            'message' => "Responsável alterado com sucesso!"
         ], 200);
     }
 }

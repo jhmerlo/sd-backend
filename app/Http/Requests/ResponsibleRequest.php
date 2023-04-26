@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class HardwareTestsRequest extends FormRequest
+class ResponsibleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -52,13 +52,8 @@ class HardwareTestsRequest extends FormRequest
         return [
             'required' => 'O campo :attribute é obrigatório.',
             'integer' => 'O campo :attribute deve ser do tipo inteiro.',
-            'boolean' => 'O campo :attribute deve ser do tipo booleano.',
             'exists' => 'O campo :attribute deve ser um id existente.',
-            'max' => 'O campo :attribute deve possuir no máximo :max caracteres.',
-            'min' => 'O campo :attribute deve possuir no mínimo :min caracteres.',
-            'size' => 'O campo :attribute deve possuir exatamente :size caracteres.',
-            'between' => 'O campo :attribute deve estar entre :min e :max.',
-            'string' => 'O campo :attribute deve ser do tipo string.'
+            'min' => 'O campo :attribute deve possuir no mínimo :min caracteres.'
         ];
     }
 

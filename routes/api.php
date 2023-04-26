@@ -53,6 +53,8 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
         Route::put('computer/{id}/network-and-peripherals-step', 'networkAndPeripheralsUpdate');
         Route::put('computer/{id}/user-tests-step', 'userTestsUpdate');
         Route::put('computer/{id}/reset-steps', 'resetSteps');
+
+        Route::put('computer/{id}/responsible', 'changeResponsible');
     });
 
     Route::controller(MotherboardController::class)->group(function () {
