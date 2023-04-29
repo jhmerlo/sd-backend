@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('user_test_histories', function (Blueprint $table) {
             $table->id();
-            $table->boolean('auto_boot')->nullable();
-            $table->boolean('initialization')->nullable();
-            $table->boolean('shortcuts')->nullable();
-            $table->boolean('correct_date')->nullable();
+            $table->boolean('auto_boot');
+            $table->boolean('initialization');
+            $table->boolean('shortcuts');
+            $table->boolean('correct_date');
             $table->string('gsuite_performance')->nullable();
             $table->string('wine_performance')->nullable();
             $table->string('youtube_performance')->nullable();

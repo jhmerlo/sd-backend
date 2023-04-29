@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserTestHistoryRequest;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use App\Models\UserTestHistory;
 use App\Models\Computer;
@@ -12,7 +14,7 @@ class UserTestHistoryController extends Controller
     public function index(Request $request)
     {
         $computer = Computer::findOrFail($request->computer_id);
-
+        
         return response()->json([
             'histories' => $computer->userTestHistories
         ], 200);
@@ -28,7 +30,7 @@ class UserTestHistoryController extends Controller
     {
         $validatedData = $request->validated();
 
-        $computer = Computer::findOrFail($validatedData['computer_id']);
+        $computer = Computer::findOrFail($validatedData[$request->id]);
         
         if ($computer->current_step != 5) {
             return response()->json([
@@ -39,6 +41,9 @@ class UserTestHistoryController extends Controller
         $user_tests_history = new UserTestHistory;
 
         $user_tests_history->fill($validatedData);
+
+        $user_tests_history->responsible_id = Auth::user()->institutional_id;
+        $user_tests_history->computer_id = $request->id;
 
         $user_tests_history->save();
 

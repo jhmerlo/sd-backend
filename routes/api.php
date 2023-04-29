@@ -136,7 +136,7 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
 
     Route::controller(UserTestHistoryController::class)->group(function () {
         Route::get('computer/{id}/user-test-histories', 'index');
-        Route::post('user-test-history', 'store');
+        Route::post('computer/{id}/user-test-history', 'store');
     });
 
     Route::controller(CommentController::class)->group(function () {
