@@ -32,9 +32,7 @@ class MaintenanceHistoryRequest extends FormRequest
             'formatting' => 'formatação',
             'battery_change' => 'troca de bateria',
             'suction' => 'aspiração',
-            'other' => 'outras',
-            'responsible_id' => 'id do responsável',
-            'computer_id' => 'id do computador'
+            'other' => 'outras'
         ];
     }
 
@@ -51,9 +49,7 @@ class MaintenanceHistoryRequest extends FormRequest
             'formatting' => 'nullable|string|max:255',
             'battery_change' => 'nullable|string|max:255',
             'suction' => 'nullable|string|max:255',
-            'other' => 'nullable|string|max:255',
-            'responsible_id' => 'required|integer|exists:users,institutional_id|min:10',
-            'computer_id' => 'required|integer|exists:computers,id'
+            'other' => 'nullable|string|max:255'
         ];
     }
 

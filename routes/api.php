@@ -130,12 +130,12 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
     });
 
     Route::controller(MaintenanceHistoryController::class)->group(function () {
-        Route::get('computer/{computer_id}/maintenance-histories', 'index');
-        Route::post('maintenance-history', 'store');
+        Route::get('computer/{id}/maintenance-histories', 'index');
+        Route::post('computer/{id}/maintenance-history', 'store');
     });
 
     Route::controller(UserTestHistoryController::class)->group(function () {
-        Route::get('computer/{computer_id}/user-test-histories', 'index');
+        Route::get('computer/{id}/user-test-histories', 'index');
         Route::post('user-test-history', 'store');
     });
 

@@ -85,7 +85,9 @@ class ComputerController extends Controller
             'monitors', 
             'gpus',
             'comments',
-            'comments.user'
+            'comments.user',
+            'maintenanceHistories',
+            'maintenanceHistories.responsible'
         ])->findOrFail($request->id);
 
         return response()->json([
@@ -170,18 +172,15 @@ class ComputerController extends Controller
         }
     }
 
-    public function maintenanceUpdate (MaintenanceRequest $request)
+    public function maintenanceUpdate (Request $request)
     {
         $computer = Computer::findOrFail($request->id);
-        $validatedData = $request->validated();
 
         if ($computer->current_step != 3) {
             return response()->json([
                 'message' => 'Computador não está na fase adequada para esta solicitação.'
             ], 400);
         }
-
-        $computer->fill($validatedData);
 
         $computer->current_step = 4;
 

@@ -6,6 +6,7 @@ use App\Http\Requests\MaintenanceHistoryRequest;
 use Illuminate\Http\Request;
 use App\Models\MaintenanceHistory;
 use App\Models\Computer;
+use Illuminate\Support\Facades\Auth;
 
 class MaintenanceHistoryController extends Controller
 {
@@ -28,7 +29,7 @@ class MaintenanceHistoryController extends Controller
     {
         $validatedData = $request->validated();
 
-        $computer = Computer::findOrFail($validatedData['computer_id']);
+        $computer = Computer::findOrFail($request->id);
         
         if ($computer->current_step != 3) {
             return response()->json([
@@ -40,6 +41,9 @@ class MaintenanceHistoryController extends Controller
 
         $maintenance_history->fill($validatedData);
 
+        $maintenance_history->responsible_id = Auth::user()->institutional_id;
+        $maintenance_history->computer_id = $request->id;
+        
         $maintenance_history->save();
 
         return response()->json([
