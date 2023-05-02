@@ -33,9 +33,7 @@ class UserTestHistoryRequest extends FormRequest
             'correct_date' => 'data correta',
             'gsuite_performance' => 'desempenho no GSuite',
             'wine_performance' => 'desempenho no Wine',
-            'youtube_performance' => 'desempenho no Youtube',
-            'responsible_id' => 'id do responsável',
-            'computer_id' => 'id do computador'
+            'youtube_performance' => 'desempenho no Youtube'
         ];
     }
 

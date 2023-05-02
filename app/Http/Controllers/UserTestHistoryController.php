@@ -30,7 +30,7 @@ class UserTestHistoryController extends Controller
     {
         $validatedData = $request->validated();
 
-        $computer = Computer::findOrFail($validatedData[$request->id]);
+        $computer = Computer::findOrFail($request->id);
         
         if ($computer->current_step != 5) {
             return response()->json([

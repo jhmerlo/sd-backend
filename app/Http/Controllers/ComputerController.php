@@ -87,7 +87,9 @@ class ComputerController extends Controller
             'comments',
             'comments.user',
             'maintenanceHistories',
-            'maintenanceHistories.responsible'
+            'maintenanceHistories.responsible',
+            'userTestHistories',
+            'userTestHistories.responsible'
         ])->findOrFail($request->id);
 
         return response()->json([
