@@ -30,7 +30,6 @@ class SortingRequest extends FormRequest
             'manufacturer' => 'fabricante',
             'sanitized' => 'higienizado',
             'functional' => 'funcional',
-            'current_step_responsible_id' => 'responsável',
             'operational_system' => 'sistema operacional',
             'description' => 'descrição',
             'patrimony' => 'patrimônio'
@@ -49,7 +48,6 @@ class SortingRequest extends FormRequest
             'manufacturer' => 'required|string|max:255',
             'sanitized' => 'nullable|boolean',
             'functional' => 'nullable|boolean',
-            'current_step_responsible_id' => 'required|integer|exists:users,institutional_id|min:10',
             'operational_system' => 'nullable|string|max:255',
             'description' => 'nullable|string|required|max:255',
             'patrimony' => 'nullable|string|max:255'

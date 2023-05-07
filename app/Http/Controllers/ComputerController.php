@@ -57,12 +57,14 @@ class ComputerController extends Controller
 
         $computer = new Computer;
         $computer->fill($validatedData);
+        $computer->current_step_responsible_id = Auth::user()->institutional_id;
 
         $computer->current_step = 1;
 
         $computer->save();
 
         return response()->json([
+            'computer' => $computer,
             'message' => "Computador criado com sucesso!"
         ], 200);
     }
