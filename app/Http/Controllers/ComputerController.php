@@ -42,7 +42,7 @@ class ComputerController extends Controller
             }
         }
 
-        return $query->orderBy('updated_at', 'desc')->with(['responsible', 'motherboard', 'comments', 'comments.user'])->paginate($recordsPerPage);
+        return $query->orderBy('updated_at', 'desc')->with(['responsible', 'loans', 'loans.responsible', 'loans.borrower'])->paginate($recordsPerPage);
     }
 
     /**

@@ -73,9 +73,9 @@ class Computer extends Model
         return $this->hasMany(Gpu::class);
     }
 
-    public function loan()
+    public function loans()
     {
-        return $this->morphOne(Loan::class, 'loanable');
+        return $this->morphMany(Loan::class, 'loanable');
     }
 
     public function comments()
