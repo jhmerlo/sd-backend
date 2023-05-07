@@ -22,15 +22,22 @@ class MotherboardController extends Controller
 
         $query = Motherboard::query();
 
-        $filters = ['computer_id', 'model', 'manufacturer', 'functional'];
+        $exactFilters = ['computer_id', 'functional', 'id'];
+        $likeFilters = ['model', 'manufacturer'];
 
-        foreach ($filters as $filter) {
+        foreach ($exactFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request[$filter]);
             }
         }
 
-        return $query->simplePaginate($recordsPerPage);
+        foreach ($likeFilters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, 'ILIKE', '%'. $request[$filter] . '%');
+            }
+        }
+
+        return $query->paginate($recordsPerPage);
     }
 
     /**
