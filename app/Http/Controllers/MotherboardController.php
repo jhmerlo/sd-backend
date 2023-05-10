@@ -37,7 +37,12 @@ class MotherboardController extends Controller
             }
         }
 
-        return $query->paginate($recordsPerPage);
+        return $query->orderBy('updated_at', 'desc')->with([
+            'transferHistories', 
+            'transferHistories.responsible',
+            'comments',
+            'comments.user'
+        ])->paginate($recordsPerPage);
     }
 
     /**

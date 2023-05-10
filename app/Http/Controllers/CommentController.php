@@ -29,7 +29,10 @@ class CommentController extends Controller
 
                 $comment->save();
 
+                $comment->user = Auth::user();
+
                 return response()->json([
+                    'comment' => $comment,
                     'message' => 'Comentário adicionado com sucesso.'
                 ], 200);
         }
