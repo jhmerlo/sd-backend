@@ -28,9 +28,9 @@ class StorageDevice extends Model
 
     public function getBorrowedAttribute () {
         if ($this->computer) {
-            return count($this->computer->loans->where('return_date', 'null')) > 0;
+            return count($this->computer->loans->where('return_date', null)) > 0;
         } else {
-            return count($this->loans->where('return_date', 'null')) > 0;
+            return count($this->loans->where('return_date', null)) > 0;
         }
     }
 

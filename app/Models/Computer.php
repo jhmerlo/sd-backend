@@ -36,7 +36,7 @@ class Computer extends Model
     protected $appends = ['borrowed'];
 
     public function getBorrowedAttribute () {
-        return count($this->loans->where('return_date', 'null')) > 0;
+        return count($this->loans->where('return_date', null)) > 0;
     }
 
     public function responsible ()
