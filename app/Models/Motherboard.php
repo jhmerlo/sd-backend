@@ -28,7 +28,7 @@ class Motherboard extends Model
 
     public function loan()
     {
-        return $this->morphOne(Loan::class, 'loanable');
+        return $this->morphMany(Loan::class, 'loanable');
     }
 
     public function comments()
