@@ -27,7 +27,7 @@ class Motherboard extends Model
         if ($this->computer) {
             return count($this->computer->loans->where('return_date', 'null')) > 0;
         } else {
-            return count($this->loans->where('return_date', 'null')) + $count > 0;
+            return count($this->loans->where('return_date', 'null')) > 0;
         }
     }
 
@@ -36,7 +36,7 @@ class Motherboard extends Model
         return $this->belongsTo(Computer::class);
     }
 
-    public function loan()
+    public function loans()
     {
         return $this->morphMany(Loan::class, 'loanable');
     }
