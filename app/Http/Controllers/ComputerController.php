@@ -249,6 +249,12 @@ class ComputerController extends Controller
             ], 400);
         } 
 
+        if ($computer->borrowed) {
+            return response()->json([
+                'message' => 'Este computador está emprestado e não pode retornar para a triagem.'
+            ], 400);
+        }
+
         $computer->current_step = 1;
 
         $computer->save();

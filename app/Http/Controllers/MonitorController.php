@@ -22,15 +22,27 @@ class MonitorController extends Controller
 
         $query = Monitor::query();
 
-        $filters = ['computer_id', 'model', 'manufacturer', 'functional', 'connections', 'size', 'panel'];
+        $exactFilters = ['computer_id', 'functional', 'id'];
+        $likeFilters = ['model', 'manufacturer', 'connections', 'panel'];
 
-        foreach ($filters as $filter) {
+        foreach ($exactFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request[$filter]);
             }
         }
 
-        return $query->simplePaginate($recordsPerPage);
+        foreach ($likeFilters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, 'ILIKE', '%'. $request[$filter] . '%');
+            }
+        }
+
+        return $query->orderBy('updated_at', 'desc')->with([
+            'transferHistories', 
+            'transferHistories.responsible',
+            'comments',
+            'comments.user'
+        ])->paginate($recordsPerPage);
     }
 
     /**

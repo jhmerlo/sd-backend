@@ -47,7 +47,7 @@ class LoanController extends Controller
 
             // checks if the item is functional, is not currently in a loan and if computer, in step 6
             $isComputer = $validatedData['loanable_type'] == 'App\\Models\\Computer';
-            if  (is_null($loanable->loan) && $loanable['functional'] && ($isComputer && $loanable['current_step'] == 6 || !$isComputer)) {
+            if  (count($loanable->loans->where('return_date', 'null') == 0 && $loanable['functional'] && ($isComputer && $loanable['current_step'] == 6 || !$isComputer)) {
                 
                 $loan = new Loan;
                 $loan->fill($validatedData);
@@ -105,11 +105,13 @@ class LoanController extends Controller
 
         // checks if the item is functional, is not currently in a loan and if computer, in step 6
         $isComputer = $loan['loanable_type'] == 'App\\Models\\Computer';
-    
+        
         // troca => inserir muitos empréstimos para um único computador. é considerado emprestado quando count($loanable->loans->where('return_date', 'null') == 0)
         if ($loan->isDirty() && $validDates && $loanable['functional'] && ($isComputer && $loanable['current_step'] == 6 || !$isComputer)){
+            
+            
             if ($loan->isDirty('loanable_id') || $loan->isDirty('loanable_type')) {
-                if (is_null($loanable->loan)) {
+                if (count($loanable->loans->where('return_date', 'null') == 0) {
                     $loan->save();
                     return response()->json([
                         'message' => 'Empréstimo editado com sucesso.'

@@ -33,6 +33,12 @@ class Computer extends Model
         'cd_rom'
     ];
 
+    protected $appends = ['borrowed'];
+
+    public function getBorrowedAttribute () {
+        return count($this->loans->where('return_date', 'null')) > 0;
+    }
+
     public function responsible ()
     {
         return $this->belongsTo(User::class, 'current_step_responsible_id', 'institutional_id');

@@ -21,6 +21,16 @@ class Motherboard extends Model
         'computer_id'
     ];
 
+    protected $appends = ['borrowed'];
+
+    public function getBorrowedAttribute () {
+        if ($this->computer) {
+            return count($this->computer->loans->where('return_date', 'null')) > 0;
+        } else {
+            return count($this->loans->where('return_date', 'null')) + $count > 0;
+        }
+    }
+
     public function computer ()
     {
         return $this->belongsTo(Computer::class);

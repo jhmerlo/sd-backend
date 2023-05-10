@@ -22,15 +22,27 @@ class StorageDeviceController extends Controller
 
         $query = StorageDevice::query();
 
-        $filters = ['computer_id', 'model', 'manufacturer', 'functional', 'type', 'connection_technology'];
+        $exactFilters = ['computer_id', 'functional', 'id'];
+        $likeFilters = ['model', 'manufacturer', 'type', 'connection_technology'];
 
-        foreach ($filters as $filter) {
+        foreach ($exactFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request[$filter]);
             }
         }
 
-        return $query->simplePaginate($recordsPerPage);
+        foreach ($likeFilters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, 'ILIKE', '%'. $request[$filter] . '%');
+            }
+        }
+
+        return $query->orderBy('updated_at', 'desc')->with([
+            'transferHistories', 
+            'transferHistories.responsible',
+            'comments',
+            'comments.user'
+        ])->paginate($recordsPerPage);
     }
 
     /**

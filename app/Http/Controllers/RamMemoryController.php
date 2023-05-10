@@ -22,15 +22,27 @@ class RamMemoryController extends Controller
 
         $query = RamMemory::query();
 
-        $filters = ['computer_id', 'model', 'manufacturer', 'functional', 'technology'];
+        $exactFilters = ['computer_id', 'functional', 'id'];
+        $likeFilters = ['model', 'manufacturer', 'technology'];
 
-        foreach ($filters as $filter) {
+        foreach ($exactFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request[$filter]);
             }
         }
 
-        return $query->simplePaginate($recordsPerPage);
+        foreach ($likeFilters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, 'ILIKE', '%'. $request[$filter] . '%');
+            }
+        }
+
+        return $query->orderBy('updated_at', 'desc')->with([
+            'transferHistories', 
+            'transferHistories.responsible',
+            'comments',
+            'comments.user'
+        ])->paginate($recordsPerPage);
     }
 
     /**

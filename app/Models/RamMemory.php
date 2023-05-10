@@ -24,6 +24,16 @@ class RamMemory extends Model
         'size'
     ];
 
+    protected $appends = ['borrowed'];
+
+    public function getBorrowedAttribute () {
+        if ($this->computer) {
+            return count($this->computer->loans->where('return_date', 'null')) > 0;
+        } else {
+            return count($this->loans->where('return_date', 'null')) + $count > 0;
+        }
+    }
+
     public function computer ()
     {
         return $this->belongsTo(Computer::class);
@@ -31,7 +41,7 @@ class RamMemory extends Model
 
     public function loan()
     {
-        return $this->morphOne(Loan::class, 'loanable');
+        return $this->morphMany(Loan::class, 'loanable');
     }
 
     public function comments()
