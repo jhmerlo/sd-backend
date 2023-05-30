@@ -22,7 +22,7 @@ class MonitorController extends Controller
 
         $query = Monitor::query();
 
-        $exactFilters = ['computer_id', 'functional', 'id'];
+        $exactFilters = ['computer_id', 'functional', 'id', 'borrowed'];
         $likeFilters = ['model', 'manufacturer', 'connections', 'panel'];
 
         foreach ($exactFilters as $filter) {

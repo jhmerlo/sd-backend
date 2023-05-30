@@ -22,7 +22,7 @@ class ProcessorController extends Controller
 
         $query = Processor::query();
 
-        $exactFilters = ['computer_id', 'functional', 'id'];
+        $exactFilters = ['computer_id', 'functional', 'id', 'borrowed'];
         $likeFilters = ['model', 'manufacturer'];
 
         foreach ($exactFilters as $filter) {

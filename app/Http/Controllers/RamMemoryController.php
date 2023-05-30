@@ -22,7 +22,7 @@ class RamMemoryController extends Controller
 
         $query = RamMemory::query();
 
-        $exactFilters = ['computer_id', 'functional', 'id'];
+        $exactFilters = ['computer_id', 'functional', 'id', 'borrowed'];
         $likeFilters = ['model', 'manufacturer', 'technology'];
 
         foreach ($exactFilters as $filter) {

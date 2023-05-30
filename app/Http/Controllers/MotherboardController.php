@@ -22,13 +22,14 @@ class MotherboardController extends Controller
 
         $query = Motherboard::query();
 
-        $exactFilters = ['computer_id', 'functional', 'id'];
+        $exactFilters = ['computer_id', 'functional', 'id', 'borrowed'];
         $likeFilters = ['model', 'manufacturer'];
 
         foreach ($exactFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request[$filter]);
             }
+
         }
 
         foreach ($likeFilters as $filter) {
