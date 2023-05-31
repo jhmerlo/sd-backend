@@ -19,14 +19,20 @@ class LoanController extends Controller
 
         $query = Loan::query();
 
-        $filters = ['computer_id', 'model', 'manufacturer', 'functional', 'integrated'];
+        $filters = ['loanable_type', 'loanable_id', 'responsible_id', 'borrower_id', 'id'];
 
         foreach ($filters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request[$filter]);
             }
         }
-        return $query->with(['loanable', 'responsible', 'borrower'])->simplePaginate($recordsPerPage);
+        return $query->orderBy('updated_at', 'desc')->with([
+            'loanable', 
+            'responsible', 
+            'borrower',
+            'comments',
+            'comments.user'
+        ])->paginate($recordsPerPage);
     }
 
     /**
@@ -47,7 +53,7 @@ class LoanController extends Controller
 
             // checks if the item is functional, is not currently in a loan and if computer, in step 6
             $isComputer = $validatedData['loanable_type'] == 'App\\Models\\Computer';
-            if  (count($loanable->loans->where('return_date', null) == 0 && $loanable['functional'] && ($isComputer && $loanable['current_step'] == 6 || !$isComputer)) {
+            if  (count($loanable->loans->where('return_date', null) == 0 && $loanable['functional'] && ($isComputer && $loanable['current_step'] == 6 || !$isComputer))) {
                 
                 $loan = new Loan;
                 $loan->fill($validatedData);
@@ -111,7 +117,7 @@ class LoanController extends Controller
             
             
             if ($loan->isDirty('loanable_id') || $loan->isDirty('loanable_type')) {
-                if (count($loanable->loans->where('return_date', null) == 0) {
+                if (count($loanable->loans->where('return_date', null) == 0)) {
                     $loan->save();
                     return response()->json([
                         'message' => 'Empréstimo editado com sucesso.'

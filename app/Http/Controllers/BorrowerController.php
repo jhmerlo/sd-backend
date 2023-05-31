@@ -27,7 +27,11 @@ class BorrowerController extends Controller
             }
         }
 
-        return $query->simplePaginate($recordsPerPage);
+        if ($request->noPaginate) {
+            return response()->json([
+                'borrowers' => $query->get()
+            ], 200);
+        } else return $query->simplePaginate($recordsPerPage);
     }
 
     /**
