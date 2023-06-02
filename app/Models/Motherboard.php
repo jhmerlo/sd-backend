@@ -31,6 +31,11 @@ class Motherboard extends Model
         }
     }
 
+    public function scopeAvailbaleStock($query, $type)
+    {
+        return $query->where('borrowed', $type);
+    }
+
     public function computer ()
     {
         return $this->belongsTo(Computer::class);

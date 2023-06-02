@@ -45,15 +45,15 @@ class LoanController extends Controller
     {
         $validatedData = $request->validated();
 
-        $validDates = $validatedData['end_date'] > $validatedData['start_date'] && $validatedData['return_date'] > $validatedData['start_date'];
-    
+        $validDates = strtotime($validatedData['end_date']) >= strtotime($validatedData['start_date']);
+
         // checks if the class of loanable_type exists and the dates are valid
         if (class_exists($validatedData['loanable_type']) && $validDates) {
             $loanable = $validatedData['loanable_type']::findOrFail($validatedData['loanable_id']);
 
             // checks if the item is functional, is not currently in a loan and if computer, in step 6
             $isComputer = $validatedData['loanable_type'] == 'App\\Models\\Computer';
-            if  (count($loanable->loans->where('return_date', null) == 0 && $loanable['functional'] && ($isComputer && $loanable['current_step'] == 6 || !$isComputer))) {
+            if  (!$loanable->borrowed && $loanable['functional'] && ($isComputer && $loanable['current_step'] == 6 || !$isComputer)) {
                 
                 $loan = new Loan;
                 $loan->fill($validatedData);
@@ -66,7 +66,7 @@ class LoanController extends Controller
         }
 
         return response()->json([
-            'message' => "Bad Request."
+            'message' => "Este item não cumpre os pré-requisitos para ser emprestado."
         ], 400);
     }
 
@@ -97,53 +97,33 @@ class LoanController extends Controller
         $validatedData = $request->validated();
         $loan = Loan::findOrFail($request->id);
 
-        $loan->fill($validatedData);
-
-        $validDates = $loan['end_date'] > $loan['start_date'] && $loan['return_date'] > $loan['start_date'];
-
+        
         if (!class_exists($loan['loanable_type'])) {
             return response()->json([
                 'message' => 'Classe não encontrada.'
             ], 404);
         }
-
-        $loanable = $loan['loanable_type']::findOrFail($loan['loanable_id']);
-
-        // checks if the item is functional, is not currently in a loan and if computer, in step 6
-        $isComputer = $loan['loanable_type'] == 'App\\Models\\Computer';
         
-        // troca => inserir muitos empréstimos para um único computador. é considerado emprestado quando count($loanable->loans->where('return_date', null) == 0)
-        if ($loan->isDirty() && $validDates && $loanable['functional'] && ($isComputer && $loanable['current_step'] == 6 || !$isComputer)){
-            
-            
-            if ($loan->isDirty('loanable_id') || $loan->isDirty('loanable_type')) {
-                if (count($loanable->loans->where('return_date', null) == 0)) {
-                    $loan->save();
-                    return response()->json([
-                        'message' => 'Empréstimo editado com sucesso.'
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'message' => 'Este item já está em um empréstimo.'
-                    ], 400);
-                }
-            } else {
-                $loan->save();
-                return response()->json([
-                    'message' => 'Empréstimo editado com sucesso.'
-                ], 200);
-            }
+        if ($loan['return_date'] != null) {
+            return response()->json([
+                'message' => 'Este empréstimo já foi encerrado.'
+            ], 400);
         }
+        
+        $validDates = strtotime($validatedData['return_date']) >= strtotime($validatedData['start_date']);
 
-        if (!$loan->isDirty()){
+        if ($validDates) {
+            $loan->return_date = $validatedData['return_date'];
+            $loan->save();
+
             return response()->json([
                 'message' => 'Empréstimo editado com sucesso.'
             ], 200);
+        } else {
+            return response()->json([
+                'message' => 'A data de devolução não é válida.'
+            ], 400);
         }
-
-        return response()->json([
-            'message' => "Bad Request."
-        ], 400);
     }
 
     /**

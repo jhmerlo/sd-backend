@@ -18,11 +18,15 @@ class MotherboardController extends Controller
      */
     public function index(Request $request)
     {
+        global $borrowed;
+        
+        $borrowed = $request['borrowed'];
+
         $recordsPerPage = 10;
 
         $query = Motherboard::query();
 
-        $exactFilters = ['computer_id', 'functional', 'id', 'borrowed'];
+        $exactFilters = ['computer_id', 'functional', 'id'];
         $likeFilters = ['model', 'manufacturer'];
 
         foreach ($exactFilters as $filter) {
@@ -35,6 +39,18 @@ class MotherboardController extends Controller
         foreach ($likeFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, 'ILIKE', '%'. $request[$filter] . '%');
+            }
+        }
+
+        if ($request->filled('borrowed')) {
+            $borrowedQuery = $query->get()->filter(function ($item) {
+                return $item->borrowed == filter_var($GLOBALS['borrowed'], FILTER_VALIDATE_BOOLEAN);
+            });
+           
+            if (count($borrowedQuery) > 0) {
+                $query = $borrowedQuery->toQuery();
+            } else {
+                $query = Motherboard::query()->whereNull('id');
             }
         }
 
