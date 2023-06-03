@@ -142,4 +142,12 @@ Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
     Route::controller(CommentController::class)->group(function () {
         Route::post('comment', 'store');
     });
+
+    Route::middleware('admin')->group(function () {
+        Route::controller(UserController::class)->group(function () {
+            Route::get('users', 'index');
+            Route::put('user/{id}/switch-user-license', 'switchUserLicense');
+        });
+    });
 });
+

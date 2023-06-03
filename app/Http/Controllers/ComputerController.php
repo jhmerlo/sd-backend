@@ -231,6 +231,7 @@ class ComputerController extends Controller
         $computer->fill($validatedData);
 
         $computer->current_step = 6;
+        $computer->functional = true;
 
         $computer->save();
 
