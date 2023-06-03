@@ -19,19 +19,30 @@ class BorrowerController extends Controller
 
         $query = Borrower::query();
 
-        $filters = ['institutional_id', 'email', 'name'];
+        $exactFilters = ['institutional_id'];
+        $likeFilters = ['email', 'name'];
 
-        foreach ($filters as $filter) {
+        foreach ($exactFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request[$filter]);
             }
         }
 
+        foreach ($likeFilters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, 'ILIKE', '%'. $request[$filter] . '%');
+            }
+        }
+        
         if ($request->noPaginate) {
             return response()->json([
                 'borrowers' => $query->get()
             ], 200);
-        } else return $query->simplePaginate($recordsPerPage);
+        } else return $query->orderBy('updated_at', 'desc')->with([
+            'loans',
+            'loans.borrower',
+            'loans.responsible'
+        ])->paginate($recordsPerPage);
     }
 
     /**
