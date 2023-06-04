@@ -99,7 +99,6 @@ class ProcessorController extends Controller
         $changedComputerId = $processor->isDirty('computer_id');
         $changedFunctionalFieldToFalse = $processor->isDirty('functional') && $processor['functional'] == false;
 
-        dd($processor->isDirty());
         if ($processor->isDirty()) {
             if (($changedComputerId || $changedFunctionalFieldToFalse) && !is_null($processor->getOriginal('computer_id'))) {
                 $computer = Computer::findOrFail($processor->getOriginal('computer_id'));

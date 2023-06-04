@@ -18,6 +18,7 @@ use App\Http\Controllers\MaintenanceHistoryController;
 use App\Http\Controllers\UserTestHistoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,7 @@ Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'ver
 Route::middleware('auth:sanctum', 'verified', 'active')->group(function () {
 
     Route::get('user-select-options-index', [UserController::class, 'userSelectOptionsIndex']);
-
+    Route::get('dashboard', [DashboardController::class, 'index']);
     Route::post('logout', [AuthController::class, 'revokeAccessTokens']);
 
     Route::controller(ComputerController::class)->group(function () {
